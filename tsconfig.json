@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "strict": true,
+        "jsx": "preserve",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "lib": ["esnext", "dom"],
+        "types": ["vite/client", "vite-plugin-svg-icons/client", "node"],
+        "paths": {
+            "@/*": ["src/*"],
+            "utils/*": ["src/utils/*"]
+        },
+        "baseUrl": "./",
+        "skipLibCheck": true,
+        "allowImportingTsExtensions": true
+    },
+    "include": ["./shims-vue.d.ts"]
+}

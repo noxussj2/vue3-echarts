@@ -1,0 +1,15 @@
+{
+    "name": "echarts-next",
+    "version": "3.0.6",
+    "description": "V3 ns-echarts 升级版",
+    "main": "index.ts",
+    "author": "noxussj",
+    "license": "MIT",
+    "homepage": "",
+    "repository": "",
+    "keywords": [],
+    "dependencies": {
+        "@types/echarts": "^4.9.16",
+        "vue": "^3.3.10"
+    }
+}
