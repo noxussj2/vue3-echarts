@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" style="height: 100%"></div>
+    <div ref="echarts" class="echarts" :style="{ height: props.height }"></div>
 </template>
 
 <script lang="ts" setup>
@@ -7,6 +7,14 @@ import { ref, onMounted, watch } from 'vue';
 import render from './render';
 
 const props = defineProps({
+    /**
+     * 高度
+     */
+    height: {
+        type: String,
+        default: '100%',
+    },
+
     /**
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
@@ -40,14 +48,6 @@ const props = defineProps({
     },
 
     /**
-     * 渐变
-     */
-    areaGradient: {
-        type: Array || null,
-        default: null,
-    },
-
-    /**
      * 柱状图宽度
      */
     barWidth: {
@@ -62,7 +62,7 @@ onMounted(() => {
     watch(
         () => props.data,
         () => {
-            render({ $dom: echarts, $opt: props.opt, $data: props.data, $seriesColor: props.color, $areaGradient: props.areaGradient, $barWidth: props.barWidth });
+            render({ $dom: echarts, $opt: props.opt, $data: props.data, $seriesColor: props.color, $barWidth: props.barWidth });
         },
         {
             deep: true,

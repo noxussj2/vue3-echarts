@@ -1,15 +1,15 @@
 import _echarts from '../../../utils/echarts-register';
 import { extens } from '../../../core/echarts-extens';
-import { useStyle } from '../../../core/echarts-style';
+import { useStyle } from '../../../styles';
 
-export default ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
-    const { $color, $grid, $tooltip, $xAxis, $yAxis, $legend } = useStyle();
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
+    const { $color, $grid, $tooltip, $vertical, $legend } = useStyle();
 
     const series: any = [];
 
     $data.series.forEach((item: any) => {
         series.push({
-            type: 'bar',
+            type: item.type || 'bar',
             name: item.name,
             data: item.data,
             barWidth: $barWidth,
@@ -32,8 +32,8 @@ export default ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
             $tooltip
         ),
         legend: Object.assign({}, $legend),
-        xAxis: Object.assign({ data: $data.axis }, $xAxis.vertical),
-        yAxis: [Object.assign({}, $yAxis.vertical)],
+        xAxis: Object.assign({ data: $data.axis }, $vertical.xAxis),
+        yAxis: [Object.assign({}, $vertical.yAxis)],
         series: series,
     };
 

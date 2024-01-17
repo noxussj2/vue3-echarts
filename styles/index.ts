@@ -2,23 +2,10 @@ let $color = {
     /**
      * 主题色-深色模式
      */
-    theme: [
-        'rgba(168, 39, 255, 1)',
-        'rgba(130, 39, 255, 1)',
-        'rgba(90, 0, 255, 1)',
-        'rgba(31, 84, 255, 1)',
-        'rgba(46, 41, 255, 1)',
-        'rgba(6, 0, 255, 1)',
-        'rgba(11, 80, 255, 1)',
-        'rgba(0, 168, 255, 1)',
-        'rgba(0, 204, 255, 1)',
-        'rgba(15, 241, 255, 1)',
-        'rgba(0, 255, 213, 1)',
-        'rgba(0, 255, 612, 1)',
-    ],
+    theme: ['#B392F0', '#85E89D', '#9ECBFF', '#F97583', '#E1E4E8'],
 
     /**
-     * 标题/副标题
+     * 标题/副标题颜色
      */
     title: 'rgba(12, 139, 255, 1)',
 
@@ -26,6 +13,16 @@ let $color = {
      * 图例标签颜色
      */
     legendLabel: 'rgba(255, 255, 255, 1)',
+
+    /**
+     * X轴标签颜色
+     */
+    xAxisLabel: 'rgba(255, 255, 255, 1)',
+
+    /**
+     * Y轴标签颜色
+     */
+    yAxisLabel: 'rgba(255, 255, 255, 1)',
 
     /**
      * X轴分割线颜色
@@ -38,11 +35,6 @@ let $color = {
     xAxisLine: 'rgba(142, 245, 254, 0.15)',
 
     /**
-     * X轴标签颜色
-     */
-    xAxisLabel: 'rgba(255, 255, 255, 1)',
-
-    /**
      * Y轴分割线颜色
      */
     ySplitLine: 'rgba(255, 255, 255, 0.05)',
@@ -51,38 +43,6 @@ let $color = {
      * Y轴轴线颜色
      */
     yAxisLine: 'rgba(142, 245, 254, 0.1)',
-
-    /**
-     * Y轴标签颜色
-     */
-    yAxisLabel: 'rgba(255, 255, 255, 1)',
-};
-
-let $grid = {
-    /**
-     * 上
-     */
-    top: 60,
-
-    /**
-     * 右
-     */
-    right: 20,
-
-    /**
-     * 下
-     */
-    bottom: 20,
-
-    /**
-     * 左
-     */
-    left: 20,
-
-    /**
-     * grid 区域是否包含坐标轴的刻度标签
-     */
-    containLabel: true,
 };
 
 let $fontSize = {
@@ -94,12 +54,12 @@ let $fontSize = {
     /**
      * x轴刻度标签
      */
-    xAxisLabel: 10,
+    xAxisLabel: 12,
 
     /**
      * x轴名称
      */
-    xAxisName: 10,
+    xAxisName: 12,
 
     /**
      * y轴刻度标签
@@ -118,22 +78,115 @@ let $fontSize = {
 };
 
 /**
+ * 容器内边距
+ */
+let $grid = {
+    /**
+     * 上
+     */
+    top: 50,
+
+    /**
+     * 右
+     */
+    right: 0,
+
+    /**
+     * 下
+     */
+    bottom: 15,
+
+    /**
+     * 左
+     */
+    left: 0,
+
+    /**
+     * grid 区域是否包含坐标轴的刻度标签
+     */
+    containLabel: true,
+};
+
+/**
  * 提示框风格
  */
 let $tooltip = {
+    /**
+     * 背景色
+     */
     backgroundColor: 'rgba(255, 255, 255, 1)',
+
+    /**
+     * 边框颜色
+     */
     borderColor: 'rgba(255, 255, 255, 1)',
+
+    /**
+     * 边框宽度
+     */
     borderWidth: 1,
+
+    /**
+     * 文字样式
+     */
     textStyle: {
         color: 'rgba(48, 49, 51, 1)',
     },
 };
 
 /**
- * x 轴风格
+ * 图例风格
  */
-let $xAxis = {
-    vertical: {
+let $legend = {
+    /**
+     * 控制图例默认是否显示
+     */
+    show: true,
+
+    /**
+     * 图例形状
+     */
+    icon: 'rect',
+
+    /**
+     * 距离容器上边界的距离
+     */
+    top: 10,
+
+    /**
+     * 距离容器右边界的距离
+     */
+    right: 10,
+
+    /**
+     * 图形宽度
+     */
+    itemWidth: 10,
+
+    /**
+     * 图形高度
+     */
+    itemHeight: 3,
+
+    /**
+     * 图例之间的间距
+     */
+    itemGap: 15,
+
+    /**
+     * 文字样式
+     */
+    textStyle: {
+        color: '#fff',
+        fontSize: $fontSize.legendLabel,
+    },
+};
+
+/**
+ * 纵向坐标轴风格
+ */
+let $vertical = {
+    xAxis: {
         type: 'category',
         axisTick: {
             show: false,
@@ -152,25 +205,9 @@ let $xAxis = {
                 color: $color.xSplitLine,
             },
         },
-        boundaryGap: false,
+        boundaryGap: true,
     },
-    horizontal: {
-        type: 'value',
-        axisLabel: {
-            color: $color.xAxisLabel,
-            fontSize: $fontSize.xAxisLabel,
-        },
-        splitLine: {
-            show: false,
-        },
-    },
-};
-
-/**
- * y 轴风格
- */
-let $yAxis = {
-    vertical: {
+    yAxis: {
         type: 'value',
         nameTextStyle: {
             color: $color.yAxisLabel,
@@ -192,7 +229,23 @@ let $yAxis = {
             },
         },
     },
-    horizontal: {
+};
+
+/**
+ * 横向坐标轴风格
+ */
+let $horizontal = {
+    xAxis: {
+        type: 'value',
+        axisLabel: {
+            color: $color.xAxisLabel,
+            fontSize: $fontSize.xAxisLabel,
+        },
+        splitLine: {
+            show: false,
+        },
+    },
+    yAxis: {
         type: 'category',
         axisTick: {
             show: false,
@@ -207,32 +260,15 @@ let $yAxis = {
     },
 };
 
-/**
- * 图例风格
- */
-let $legend = {
-    show: true,
-    icon: 'rect',
-    top: 10,
-    right: 20,
-    itemWidth: 10,
-    itemHeight: 3,
-    itemGap: 15,
-    textStyle: {
-        color: '#fff',
-        fontSize: $fontSize.legendLabel,
-    },
-};
-
 export const useStyle = () => {
-    return { $color, $grid, $tooltip, $xAxis, $yAxis, $legend };
+    return { $color, $grid, $tooltip, $horizontal, $vertical, $legend };
 };
 
 export const loadStyle = (style: any) => {
     $color = style.$color;
     $grid = style.$grid;
     $tooltip = style.$tooltip;
-    $xAxis = style.$xAxis;
-    $yAxis = style.$yAxis;
+    $horizontal = style.$horizontal;
+    $vertical = style.$vertical;
     $legend = style.$legend;
 };

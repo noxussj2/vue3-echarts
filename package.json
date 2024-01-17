@@ -1,15 +1,17 @@
 {
-    "name": "echarts-next",
-    "version": "3.0.6",
-    "description": "V3 ns-echarts 升级版",
+    "name": "vue3-echarts",
+    "version": "0.0.1-beta",
+    "description": "Vue3 Echarts 开箱即用的图表组件库",
     "main": "index.ts",
-    "author": "noxussj",
+    "author": "noxussj2",
     "license": "MIT",
     "homepage": "",
     "repository": "",
     "keywords": [],
     "dependencies": {
         "@types/echarts": "^4.9.16",
+        "echarts": "^5.4.3",
+        "lodash-es": "^4.17.21",
         "vue": "^3.3.10"
     }
 }
