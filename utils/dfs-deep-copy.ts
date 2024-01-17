@@ -9,10 +9,10 @@ export const type = (data: string) => {
         '[object Function]': 'function',
         '[object String]': 'string',
         '[object Null]': 'null',
-        '[object Undefined]': 'undefined',
-    };
+        '[object Undefined]': 'undefined'
+    }
 
-    const res = Object.prototype.toString.call(data);
+    const res = Object.prototype.toString.call(data)
 
-    return dist[res];
-};
+    return dist[res]
+}

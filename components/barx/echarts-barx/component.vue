@@ -1,18 +1,19 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ height: props.height }"></div>
+    <div ref="echarts" class="echarts" :style="{ height: props.height }" />
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue';
-import render from './render';
+import { onMounted, ref, watch } from 'vue'
+import render from './render'
 
 const props = defineProps({
+
     /**
      * 高度
      */
     height: {
         type: String,
-        default: '100%',
+        default: '100%'
     },
 
     /**
@@ -20,7 +21,7 @@ const props = defineProps({
      */
     opt: {
         type: Object,
-        default: () => ({}),
+        default: () => ({})
     },
 
     /**
@@ -32,11 +33,11 @@ const props = defineProps({
             series: [
                 {
                     name: '1月',
-                    data: [120, 200, 150, 80, 70, 110, 130],
-                },
+                    data: [120, 200, 150, 80, 70, 110, 130]
+                }
             ],
-            axis: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        }),
+            axis: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        })
     },
 
     /**
@@ -44,7 +45,7 @@ const props = defineProps({
      */
     color: {
         type: Array || null,
-        default: null,
+        default: null
     },
 
     /**
@@ -52,22 +53,22 @@ const props = defineProps({
      */
     barWidth: {
         type: Number,
-        default: 15,
-    },
-});
+        default: 15
+    }
+})
 
-const echarts = ref<null>(null);
+const echarts = ref<null>(null)
 
 onMounted(() => {
     watch(
         () => props.data,
         () => {
-            render({ $dom: echarts, $opt: props.opt, $data: props.data, $seriesColor: props.color, $barWidth: props.barWidth });
+            render({ $dom: echarts, $opt: props.opt, $data: props.data, $seriesColor: props.color, $barWidth: props.barWidth })
         },
         {
             deep: true,
-            immediate: true,
+            immediate: true
         }
-    );
-});
+    )
+})
 </script>
