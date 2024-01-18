@@ -2,8 +2,8 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground }: any) => {
-    const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground, $label }: any) => {
+    const { $color, $grid, $tooltip, $horizontal, $legend } = useStyle()
 
     /**
      * 过滤主题色
@@ -32,8 +32,8 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
                     type: 'linear',
                     x: 0,
                     y: 0,
-                    x2: 0,
-                    y2: 1,
+                    x2: 1,
+                    y2: 0,
                     colorStops: [
                         {
                             offset: 0,
@@ -61,6 +61,11 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
             data,
             barWidth: $barWidth,
             stack: $stack,
+            label: {
+                show: $label,
+                position: 'right',
+                color: $color.seriesLabel
+            },
             itemStyle: {
                 borderRadius: $radius
             },
@@ -84,8 +89,8 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
             $tooltip
         ),
         legend: Object.assign({}, $legend),
-        xAxis: Object.assign({ data: $data.axis }, $vertical.xAxis),
-        yAxis: [Object.assign({}, $vertical.yAxis)],
+        xAxis: Object.assign({}, $horizontal.xAxis),
+        yAxis: [Object.assign({ data: $data.axis }, $horizontal.yAxis)],
         series
     }
 

@@ -43,7 +43,12 @@ let $color = {
     /**
      * Y轴轴线颜色
      */
-    yAxisLine: 'rgba(142, 245, 254, 0.1)'
+    yAxisLine: 'rgba(142, 245, 254, 0.1)',
+
+    /**
+     * 数据文字颜色
+     */
+    seriesLabel: 'rgba(255, 255, 255, 1)'
 }
 
 const $fontSize = {
