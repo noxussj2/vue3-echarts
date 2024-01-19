@@ -17,7 +17,7 @@ const props = defineProps({
     },
 
     /**
-     * 高度
+     * 容器高度
      */
     height: {
         type: String,
@@ -25,7 +25,7 @@ const props = defineProps({
     },
 
     /**
-     * 数据项
+     * 数据源
      */
     data: {
         type: Object,

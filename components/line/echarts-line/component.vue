@@ -17,7 +17,7 @@ const props = defineProps({
     },
 
     /**
-     * 高度
+     * 容器高度
      */
     height: {
         type: String,
@@ -41,7 +41,7 @@ const props = defineProps({
     },
 
     /**
-     * 颜色
+     * 折线颜色
      */
     color: {
         type: Array || null,
