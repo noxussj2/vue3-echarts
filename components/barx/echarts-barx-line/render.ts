@@ -77,7 +77,8 @@ export default async ({ $dom, $opt, $data, $seriesColor, $lineColor, $barWidth, 
                 smooth: true,
                 itemStyle: {
                     color: $lineColor
-                }
+                },
+                yAxisIndex: 1
             })
         }
     })
@@ -98,8 +99,11 @@ export default async ({ $dom, $opt, $data, $seriesColor, $lineColor, $barWidth, 
             $tooltip
         ),
         legend: Object.assign({}, $legend),
-        xAxis: Object.assign({ data: $data.axis }, $vertical.xAxis),
-        yAxis: [Object.assign({}, $vertical.yAxis)],
+        xAxis: [{ ...$vertical.xAxis, data: $data.axis }],
+        yAxis: [
+            { ...$vertical.yAxis, data: $data.axis },
+            { ...$vertical.yAxis, data: $data.axis }
+        ],
         series
     }
 
