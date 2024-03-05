@@ -5,8 +5,6 @@ import { useStyle } from '../../../styles'
 export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground, $debugger }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
-    console.log('$grid3', $grid)
-
     /**
      * 过滤主题色
      */

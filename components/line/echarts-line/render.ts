@@ -71,7 +71,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $smooth, $gradientColor
         ),
         legend: Object.assign({}, $legend),
         xAxis: Object.assign({ data: $data.axis }, $vertical.xAxis),
-        yAxis: [Object.assign({}, $vertical.yAxis)],
+        yAxis: [{ ...$vertical.yAxis }],
         series
     }
 
