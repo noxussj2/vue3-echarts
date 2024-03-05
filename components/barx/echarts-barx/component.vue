@@ -94,6 +94,14 @@ const props = defineProps({
     showBackground: {
         type: Boolean,
         default: false
+    },
+
+    /**
+     * 调试
+     */
+    debugger: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -113,7 +121,8 @@ onMounted(() => {
                 $radius: props.radius,
                 $singleColor: props.singleColor,
                 $gradientColor: props.gradientColor,
-                $showBackground: props.showBackground
+                $showBackground: props.showBackground,
+                $debugger: props.debugger
             })
         },
         {

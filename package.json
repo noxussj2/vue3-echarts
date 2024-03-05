@@ -1,13 +1,16 @@
 {
     "name": "v3-echarts",
-    "version": "0.0.4-beta",
+    "version": "1.0.4",
     "description": "v3-echarts 开箱即用的图表组件库",
     "main": "index.ts",
     "author": "noxussj2",
     "license": "MIT",
-    "homepage": "",
-    "repository": "",
-    "keywords": [],
+    "homepage": "https://v3.noxussj.top/",
+    "repository": "https://github.com/noxussj2/vue3-echarts",
+    "keywords": [
+        "vue3",
+        "echarts"
+    ],
     "dependencies": {
         "@rushstack/eslint-patch": "^1.7.0",
         "@types/echarts": "^4.9.16",

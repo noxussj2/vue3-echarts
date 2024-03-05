@@ -1,4 +1,4 @@
-let $color = {
+const $color = {
 
     /**
      * 主题色-深色模式
@@ -87,7 +87,7 @@ const $fontSize = {
 /**
  * 容器内边距
  */
-let $grid = {
+const $grid = {
 
     /**
      * 上
@@ -118,7 +118,7 @@ let $grid = {
 /**
  * 提示框风格
  */
-let $tooltip = {
+const $tooltip = {
 
     /**
      * 背景色
@@ -146,7 +146,7 @@ let $tooltip = {
 /**
  * 图例风格
  */
-let $legend = {
+const $legend = {
 
     /**
      * 控制图例默认是否显示
@@ -195,7 +195,7 @@ let $legend = {
 /**
  * 纵向坐标轴风格
  */
-let $vertical = {
+const $vertical = {
     xAxis: {
         type: 'category',
         axisTick: {
@@ -244,7 +244,7 @@ let $vertical = {
 /**
  * 横向坐标轴风格
  */
-let $horizontal = {
+const $horizontal = {
     xAxis: {
         type: 'value',
         axisLabel: {
@@ -270,15 +270,19 @@ let $horizontal = {
     }
 }
 
+window.$v3echarts = {
+    $color,
+    $grid,
+    $tooltip,
+    $legend,
+    $vertical,
+    $horizontal
+}
+
 export const useStyle = () => {
-    return { $color, $grid, $tooltip, $horizontal, $vertical, $legend }
+    return window.$v3echarts
 }
 
 export const loadStyle = (style: any) => {
-    $color = style.$color
-    $grid = style.$grid
-    $tooltip = style.$tooltip
-    $horizontal = style.$horizontal
-    $vertical = style.$vertical
-    $legend = style.$legend
+    window.$v3echarts = style
 }

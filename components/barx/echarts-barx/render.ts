@@ -2,8 +2,10 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground, $debugger }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
+
+    console.log('$grid3', $grid)
 
     /**
      * 过滤主题色
@@ -93,4 +95,10 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
      * 继承配置项后渲染图表
      */
     _echarts.render($dom, extens($opt, options))
+
+    if ($debugger) {
+        console.log('echarts-barx', {
+            extens: extens($opt, options)
+        })
+    }
 }
