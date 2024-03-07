@@ -1,0 +1,39 @@
+.echarts-pie-hover {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .echarts {
+        width: 100%;
+        height: 100%;
+    }
+
+    main {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(-50%);
+        pointer-events: none;
+
+        .main__name {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .main__value {
+            font-weight: bold;
+            font-size: 24px;
+            background: linear-gradient(0deg, #6afff3 0%, #ffffff 69.6044921875%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main__unit {
+            font-size: 14px;
+            color: #fff;
+        }
+    }
+}

@@ -31,7 +31,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $radius, $le
         legend.formatter = (name: string) => {
             const find = $data.find((item: any) => item.name === name)
             const percent = ((find.value / total) * 100).toFixed(2)
-            return `${name} ${percent}${'%'}`
+            return `${name}  ${percent}${'%'}`
         }
     }
 

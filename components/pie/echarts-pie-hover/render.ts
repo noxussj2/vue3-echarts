@@ -67,5 +67,5 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
     /**
      * 继承配置项后渲染图表
      */
-    _echarts.render($dom, extens($opt, options))
+    return _echarts.render($dom, extens($opt, options))
 }
