@@ -45,7 +45,7 @@ const echarts = ref<null>(null)
 
 onMounted(() => {
     watch(
-        () => props.json,
+        [() => props.json, () => props.data],
         () => {
             if (props.json.type) {
                 render({ $dom: echarts, $opt: props.opt, $json: props.json, $data: props.data })

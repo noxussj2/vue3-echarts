@@ -89,7 +89,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
             $tooltip
         ),
         legend: Object.assign({}, $legend),
-        xAxis: Object.assign({}, $horizontal.xAxis),
+        xAxis: [Object.assign({}, $horizontal.xAxis)],
         yAxis: [Object.assign({ data: $data.axis }, $horizontal.yAxis)],
         series
     }
