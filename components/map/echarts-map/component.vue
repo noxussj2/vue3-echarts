@@ -6,6 +6,12 @@
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
 
+interface EmitsType {
+    (e: 'click', value: String): void;
+}
+
+const emit = defineEmits<EmitsType>()
+
 const props = defineProps({
 
     /**
@@ -25,9 +31,9 @@ const props = defineProps({
     },
 
     /**
-     * 数据源
+     * 点位数据
      */
-    data: {
+    markers: {
         type: Array,
         default: () => []
     },
@@ -38,6 +44,22 @@ const props = defineProps({
     json: {
         type: Object,
         default: () => ({})
+    },
+
+    /**
+     * 区域名称 icon
+     */
+    icon: {
+        type: String,
+        default: ''
+    },
+
+    /**
+     * 热力图数据
+     */
+    regions: {
+        type: Array,
+        default: () => []
     }
 })
 
@@ -45,10 +67,19 @@ const echarts = ref<null>(null)
 
 onMounted(() => {
     watch(
-        [() => props.json, () => props.data],
-        () => {
+        [() => props.json, () => props.markers, () => props.regions],
+        async () => {
             if (props.json.type) {
-                render({ $dom: echarts, $opt: props.opt, $json: props.json, $data: props.data })
+                console.log('props.markers', props.markers)
+                const instance = await render({ $dom: echarts, $opt: props.opt, $json: props.json, $markers: props.markers, $icon: props.icon, $regions: props.regions })
+
+                /**
+                 * 地图下钻
+                 */
+                instance.on('click', (e) => {
+                    const find = props.json.features.find((item: any) => item.properties.name === e.name)
+                    emit('click', String(find.properties.adcode))
+                })
             }
         },
         {
