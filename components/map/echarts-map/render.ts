@@ -20,6 +20,22 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
      * 导出配置项
      */
     const options = {
+        tooltip: {
+            show: true,
+            showContent: false,
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+            borderColor: 'rgba(255, 255, 255, 0)',
+            borderWidth: 0,
+            extraCssText: 'box-shadow: 0 0 0;',
+            formatter: (params: any) => {
+                return `
+                    <div class="echarts-map-tooltip">
+                        <span class="item__name">林下参种植面积：</span>
+                        <span class="item__value">158113亩</span>
+                    </div>
+                `
+            }
+        },
         geo: {
             type: 'map',
             map: 'Map',
@@ -34,8 +50,9 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
                 }
             },
             emphasis: {
-
-                // disabled: true
+                itemStyle: {
+                    borderColor: '#FCF903'
+                }
             },
             regions: $regions
         },
@@ -49,7 +66,10 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
                 symbol: `image://${$icon}`,
                 symbolRotate: 30,
                 symbolOffset: [-15, -25],
-                data: iconData
+                data: iconData,
+                tooltip: {
+                    showContent: true
+                }
             },
 
             // 标点数据
@@ -57,7 +77,11 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
                 type: 'scatter',
                 coordinateSystem: 'geo',
                 symbolSize: [20, 20],
-                data: $markers
+                symbolRotate: 30,
+                data: $markers,
+                tooltip: {
+                    showContent: true
+                }
             }
         ]
     }

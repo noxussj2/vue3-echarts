@@ -7,7 +7,8 @@ import { onMounted, ref, watch } from 'vue'
 import render from './render'
 
 interface EmitsType {
-    (e: 'click', value: String): void;
+    (e: 'region', value: String): void;
+    (e: 'marker', value: any[]): void;
 }
 
 const emit = defineEmits<EmitsType>()
@@ -70,15 +71,20 @@ onMounted(() => {
         [() => props.json, () => props.markers, () => props.regions],
         async () => {
             if (props.json.type) {
-                console.log('props.markers', props.markers)
                 const instance = await render({ $dom: echarts, $opt: props.opt, $json: props.json, $markers: props.markers, $icon: props.icon, $regions: props.regions })
 
                 /**
                  * 地图下钻
                  */
                 instance.on('click', (e) => {
-                    const find = props.json.features.find((item: any) => item.properties.name === e.name)
-                    emit('click', String(find.properties.adcode))
+                    if (e.componentType === 'geo') {
+                        const find = props.json.features.find((item: any) => item.properties.name === e.name)
+                        emit('region', String(find.properties.adcode))
+                    }
+
+                    if (e.componentType === 'series' && e.componentSubType === 'scatter') {
+                        emit('marker', e.value)
+                    }
                 })
             }
         },
@@ -89,3 +95,27 @@ onMounted(() => {
     )
 })
 </script>
+
+<style lang="scss" scoped>
+:deep(.echarts-map-tooltip) {
+    width: 200px;
+    height: 60px;
+    background: rgba(19, 38, 109, 0.8);
+    box-shadow: 0 0 16px #61c9f2 inset;
+    border: 1px solid #61c9f2;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    transform: rotate(-30deg) translateX(-40%) translateY(-300%);
+
+    .item__name {
+        color: #fff;
+    }
+
+    .item__value {
+        color: #fce603;
+    }
+}
+</style>
