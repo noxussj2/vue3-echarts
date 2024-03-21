@@ -1,8 +1,9 @@
 import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
+import { colorToRgba } from '../../../utils/color'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $smooth, $gradientColor }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $smooth, $areaGradient }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
     /**
@@ -20,7 +21,10 @@ export default async ({ $dom, $opt, $data, $seriesColor, $smooth, $gradientColor
          * 渐变颜色
          */
         let gradientColor = 'rgba(0, 0, 0, 0)'
-        if ($gradientColor.length === 2) {
+        if ($areaGradient) {
+            const color1 = colorToRgba(color[index], 1)
+            const color2 = colorToRgba(color[index], 0)
+
             gradientColor = {
                 type: 'linear',
                 x: 0,
@@ -30,11 +34,11 @@ export default async ({ $dom, $opt, $data, $seriesColor, $smooth, $gradientColor
                 colorStops: [
                     {
                         offset: 0,
-                        color: $gradientColor[0]
+                        color: color1
                     },
                     {
                         offset: 1,
-                        color: $gradientColor[1]
+                        color: color2
                     }
                 ]
             }

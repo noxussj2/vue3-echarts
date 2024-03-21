@@ -25,7 +25,7 @@ const props = defineProps({
     },
 
     /**
-     * 数据项
+     * 数据源
      */
     data: {
         type: Object,
@@ -41,7 +41,7 @@ const props = defineProps({
     },
 
     /**
-     * 折线颜色
+     * 颜色
      */
     color: {
         type: Array || null,
@@ -49,17 +49,17 @@ const props = defineProps({
     },
 
     /**
-     * 是否曲线
+     * 柱状图宽度
      */
-    smooth: {
-        type: Boolean,
-        default: false
+    barWidth: {
+        type: Number,
+        default: 10
     },
 
     /**
-     * 是否开启区域渐变
+     * 是否独立颜色
      */
-    areaGradient: {
+    singleColor: {
         type: Boolean,
         default: false
     }
@@ -71,7 +71,14 @@ onMounted(() => {
     watch(
         () => props.data,
         () => {
-            render({ $dom: echarts, $opt: props.opt, $data: props.data, $seriesColor: props.color, $smooth: props.smooth, $areaGradient: props.areaGradient })
+            render({
+                $dom: echarts,
+                $opt: props.opt,
+                $data: props.data,
+                $seriesColor: props.color,
+                $barWidth: props.barWidth,
+                $singleColor: props.singleColor
+            })
         },
         {
             deep: true,

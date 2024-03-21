@@ -66,6 +66,5 @@ export default async ({ $dom, $opt, $data, $symbol, $symbolSize }: any) => {
     /**
      * 继承配置项后渲染图表
      */
-    console.log(extens($opt, options))
     _echarts.render($dom, extens($opt, options))
 }

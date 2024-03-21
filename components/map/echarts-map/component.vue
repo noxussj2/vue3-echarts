@@ -67,6 +67,7 @@ const props = defineProps({
 const echarts = ref<null>(null)
 
 onMounted(() => {
+
     watch(
         [() => props.json, () => props.markers, () => props.regions],
         async () => {

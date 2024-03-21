@@ -132,6 +132,4 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $radius, $le
      * 继承配置项后渲染图表
      */
     _echarts.render($dom, extens($opt, options))
-
-    console.log(extens($opt, options))
 }
