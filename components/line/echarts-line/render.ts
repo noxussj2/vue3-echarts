@@ -64,6 +64,16 @@ export default async ({ $dom, $opt, $data, $seriesColor, $smooth, $areaGradient 
     const options = {
         color,
         grid: $grid,
+        dataZoom: [
+            {
+                type: 'slider',
+                startValue: 0,
+                endValue: 4,
+                handleSize: 8,
+                zoomLock: true,
+                show: false
+            }
+        ],
         tooltip: Object.assign(
             {
                 trigger: 'axis',
@@ -82,5 +92,5 @@ export default async ({ $dom, $opt, $data, $seriesColor, $smooth, $areaGradient 
     /**
      * 继承配置项后渲染图表
      */
-    _echarts.render($dom, extens($opt, options))
+    return _echarts.render($dom, extens($opt, options))
 }

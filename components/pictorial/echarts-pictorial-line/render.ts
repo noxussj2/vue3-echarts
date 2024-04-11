@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground, $debugger }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $gradientColor, $symbol, $lineColor }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
     /**
@@ -15,14 +15,12 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
      */
     const series: any = []
     $data.series.forEach((item: any, index: number) => {
-        const data: any = []
-
-        item.data.forEach((x: any, i: number) => {
+        if (item.type === 'pictorialBar') {
 
             /**
              * 常规颜色
              */
-            let _color = $singleColor ? color[i] : color[index]
+            let _color = color[index]
 
             /**
              * 渐变颜色
@@ -47,25 +45,30 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
                 }
             }
 
-            data.push({
-                value: x,
+            series.push({
+                type: 'pictorialBar',
+                name: item.name,
+                data: item.data,
+                barWidth: $barWidth,
+                symbol: $symbol,
                 itemStyle: {
                     color: _color
                 }
             })
-        })
+        }
 
-        series.push({
-            type: 'bar',
-            name: item.name,
-            data,
-            barWidth: $barWidth,
-            stack: $stack,
-            itemStyle: {
-                borderRadius: $radius
-            },
-            showBackground: $showBackground
-        })
+        if (item.type === 'line') {
+            series.push({
+                type: 'line',
+                name: item.name,
+                data: item.data,
+                smooth: true,
+                itemStyle: {
+                    color: $lineColor
+                },
+                yAxisIndex: 1
+            })
+        }
     })
 
     /**
@@ -74,16 +77,6 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
     const options = {
         color,
         grid: $grid,
-        dataZoom: [
-            {
-                type: 'slider',
-                startValue: 0,
-                endValue: 4,
-                handleSize: 8,
-                zoomLock: true,
-                show: false
-            }
-        ],
         tooltip: Object.assign(
             {
                 trigger: 'axis',
@@ -95,12 +88,15 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
         ),
         legend: Object.assign({}, $legend),
         xAxis: Object.assign({ data: $data.axis }, $vertical.xAxis),
-        yAxis: [Object.assign({}, $vertical.yAxis)],
+        yAxis: [
+            { ...$vertical.yAxis, data: $data.axis },
+            { ...$vertical.yAxis, data: $data.axis }
+        ],
         series
     }
 
     /**
      * 继承配置项后渲染图表
      */
-    return _echarts.render($dom, extens($opt, options))
+    _echarts.render($dom, extens($opt, options))
 }

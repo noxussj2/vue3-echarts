@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $center, $legend }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $center, $legend, $roseType }: any) => {
     const { $color, $tooltip } = useStyle()
 
     /**
@@ -59,7 +59,8 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
                 },
                 labelLine: {
                     show: $label
-                }
+                },
+                roseType: $roseType
             }
         ]
     }

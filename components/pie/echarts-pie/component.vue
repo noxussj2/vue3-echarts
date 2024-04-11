@@ -30,12 +30,13 @@ const props = defineProps({
     data: {
         type: Array,
         default: () => [
-            { name: '衬衫', value: 5 },
-            { name: '羊毛衫', value: 20 },
-            { name: '雪纺衫', value: 36 },
-            { name: '裤子', value: 10 },
-            { name: '高跟鞋', value: 10 },
-            { name: '袜子', value: 20 }
+
+            // { name: '衬衫', value: 5 },
+            // { name: '羊毛衫', value: 20 },
+            // { name: '雪纺衫', value: 36 },
+            // { name: '裤子', value: 10 },
+            // { name: '高跟鞋', value: 10 },
+            // { name: '袜子', value: 20 }
         ]
     },
 
@@ -77,6 +78,14 @@ const props = defineProps({
     legend: {
         type: Boolean,
         default: false
+    },
+
+    /**
+     * 是否展示成南丁格尔图
+     */
+    roseType: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -86,7 +95,17 @@ onMounted(() => {
     watch(
         () => props.data,
         () => {
-            render({ $dom: echarts, $opt: props.opt, $data: props.data, $seriesColor: props.color, $radius: props.radius, $label: props.label, $center: props.center, $legend: props.legend })
+            render({
+                $dom: echarts,
+                $opt: props.opt,
+                $data: props.data,
+                $seriesColor: props.color,
+                $radius: props.radius,
+                $label: props.label,
+                $center: props.center,
+                $legend: props.legend,
+                $roseType: props.roseType
+            })
         },
         {
             deep: true,

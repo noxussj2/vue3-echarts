@@ -110,8 +110,8 @@ const echarts = ref<null>(null)
 onMounted(() => {
     watch(
         () => props.data,
-        () => {
-            render({
+        async () => {
+            const instance: any = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
@@ -124,6 +124,31 @@ onMounted(() => {
                 $showBackground: props.showBackground,
                 $debugger: props.debugger
             })
+
+            /**
+             * 数据轮播
+             */
+            let startValue = 0
+            let endValue = 4
+
+            setInterval(() => {
+                startValue += 1
+                endValue += 1
+                if (endValue > props.data.axis.length - 1) {
+                    startValue = 0
+                    endValue = 4
+                }
+
+                instance.dispatchAction({
+                    type: 'dataZoom',
+
+                    // 开始位置的数值
+                    startValue,
+
+                    // 结束位置的数值
+                    endValue
+                })
+            }, 5000)
         },
         {
             deep: true,

@@ -101,7 +101,7 @@ onMounted(() => {
     watch(
         () => props.data,
         async () => {
-            const instance = await render({
+            const instance: any = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
@@ -112,12 +112,44 @@ onMounted(() => {
                 $legend: props.legend
             })
 
+            instance.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: 0
+            })
+
+            const fn = () => {
+                active.value++
+
+                if (active.value >= props.data.length) {
+                    active.value = 0
+                }
+
+                instance.dispatchAction({
+                    type: 'highlight',
+                    seriesIndex: 0,
+                    dataIndex: active.value
+                })
+
+                instance.dispatchAction({
+                    type: 'downplay',
+                    seriesIndex: 0,
+                    dataIndex: active.value === 0 ? props.data.length - 1 : active.value - 1
+                })
+            }
+
+            let timer = setInterval(fn, 5000)
+
             instance.on('mouseover', (e: any) => {
+
+                clearInterval(timer)
+
                 active.value = e.dataIndex
             })
 
             instance.on('mouseout', () => {
-                active.value = 0
+
+                timer = setInterval(fn, 5000)
             })
         },
         {

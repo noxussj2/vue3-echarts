@@ -9,6 +9,7 @@ import EchartsPie from './components/pie/echarts-pie/component.vue'
 import EchartsPieHover from './components/pie/echarts-pie-hover/component.vue'
 import EchartsPiePolar from './components/pie/echarts-pie-polar/component.vue'
 import EchartsPictorial from './components/pictorial/echarts-pictorial/component.vue'
+import EchartsPictorialLine from './components/pictorial/echarts-pictorial-line/component.vue'
 import EchartsPictorialBattery from './components/pictorial/echarts-pictorial-battery/component.vue'
 import EchartsPictorialSpirit from './components/pictorial/echarts-pictorial-spirit/component.vue'
 import EchartsMap from './components/map/echarts-map/component.vue'
@@ -25,6 +26,7 @@ export {
     EchartsPieHover,
     EchartsPiePolar,
     EchartsPictorial,
+    EchartsPictorialLine,
     EchartsPictorialBattery,
     EchartsPictorialSpirit,
     EchartsMap

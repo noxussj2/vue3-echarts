@@ -25,7 +25,7 @@ const props = defineProps({
     },
 
     /**
-     * 数据项
+     * 数据源
      */
     data: {
         type: Object,
@@ -41,27 +41,36 @@ const props = defineProps({
     },
 
     /**
-     * 折线颜色
+     * 柱状图宽度
      */
-    color: {
-        type: Array || null,
+    barWidth: {
+        type: Number,
+        default: 30
+    },
+
+    /**
+     * 渐变颜色
+     */
+    gradientColor: {
+        type: Array,
+        default: () => []
+    },
+
+    /**
+     * 图形
+     */
+    symbol: {
+        type: String,
+        default:
+            'path://d="M34.2,89.2c-0.7-16-3.4-69.2-3.9-78.8c1.7,0,3-1.4,3-3.1c0-1.7-1.4-3.1-3.1-3.1s-3.1,1.4-3.1,3.1c0,1.7,1.4,3,3,3.1c-0.4,9.6-2.5,63.2-3.9,78.3c-1.6,16.2-4.2,53.2-22.5,95.7h54C57.7,184.5,36.7,143.2,34.2,89.2z"'
+    },
+
+    /**
+     * 折线图颜色
+     */
+    lineColor: {
+        type: String,
         default: null
-    },
-
-    /**
-     * 是否曲线
-     */
-    smooth: {
-        type: Boolean,
-        default: false
-    },
-
-    /**
-     * 是否开启区域渐变
-     */
-    areaGradient: {
-        type: Boolean,
-        default: false
     }
 })
 
@@ -70,40 +79,16 @@ const echarts = ref<null>(null)
 onMounted(() => {
     watch(
         () => props.data,
-        async () => {
-            const instance: any = await render({
+        () => {
+            render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
-                $seriesColor: props.color,
-                $smooth: props.smooth,
-                $areaGradient: props.areaGradient
+                $barWidth: props.barWidth,
+                $gradientColor: props.gradientColor,
+                $symbol: props.symbol,
+                $lineColor: props.lineColor
             })
-
-            /**
-             * 数据轮播
-             */
-            let startValue = 0
-            let endValue = 4
-
-            setInterval(() => {
-                startValue += 1
-                endValue += 1
-                if (endValue > props.data.axis.length - 1) {
-                    startValue = 0
-                    endValue = 4
-                }
-
-                instance.dispatchAction({
-                    type: 'dataZoom',
-
-                    // 开始位置的数值
-                    startValue,
-
-                    // 结束位置的数值
-                    endValue
-                })
-            }, 5000)
         },
         {
             deep: true,

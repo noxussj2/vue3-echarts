@@ -16,7 +16,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $lineColor, $barWidth, 
     const series: any = []
     $data.series.forEach((item: any, index: number) => {
         if (item.type === 'bar') {
-            const data = []
+            const data: any = []
 
             item.data.forEach((x: any, i: number) => {
 
@@ -89,6 +89,16 @@ export default async ({ $dom, $opt, $data, $seriesColor, $lineColor, $barWidth, 
     const options = {
         color,
         grid: $grid,
+        dataZoom: [
+            {
+                type: 'slider',
+                startValue: 0,
+                endValue: 4,
+                handleSize: 8,
+                zoomLock: true,
+                show: false
+            }
+        ],
         tooltip: Object.assign(
             {
                 trigger: 'axis',
@@ -110,11 +120,5 @@ export default async ({ $dom, $opt, $data, $seriesColor, $lineColor, $barWidth, 
     /**
      * 继承配置项后渲染图表
      */
-    _echarts.render($dom, extens($opt, options))
-
-    if ($debugger) {
-        console.log('echarts-barx', {
-            extens: extens($opt, options)
-        })
-    }
+    return _echarts.render($dom, extens($opt, options))
 }
