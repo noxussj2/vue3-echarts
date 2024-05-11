@@ -67,7 +67,6 @@ const props = defineProps({
 const echarts = ref<null>(null)
 
 onMounted(() => {
-
     watch(
         [() => props.json, () => props.markers, () => props.regions],
         async () => {
@@ -80,7 +79,10 @@ onMounted(() => {
                 instance.on('click', (e) => {
                     if (e.componentType === 'geo') {
                         const find = props.json.features.find((item: any) => item.properties.name === e.name)
-                        emit('region', String(find.properties.adcode))
+
+                        if (find.properties.adcode) {
+                            emit('region', String(find.properties.adcode))
+                        }
                     }
 
                     if (e.componentType === 'series' && e.componentSubType === 'scatter') {
@@ -109,7 +111,8 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    transform: rotate(-30deg) translateX(-40%) translateY(-300%);
+    // transform: translateX(-40%) translateY(-300%);
+    // transform: rotate(-30deg) translateX(-40%) translateY(-300%);
 
     .item__name {
         color: #fff;

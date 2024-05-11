@@ -25,9 +25,9 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $radius, $le
             color: $color.legendLabel
         }
     }
-    if ($legend) {
-        const total = $data.reduce((prev: number, next: any) => prev + next.value, 0)
+    const total = $data.reduce((prev: number, next: any) => prev + next.value, 0)
 
+    if ($legend) {
         legend.formatter = (name: string) => {
             const find = $data.find((item: any) => item.name === name)
             const percent = ((find.value / total) * 100).toFixed(2)
@@ -54,7 +54,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $radius, $le
         ),
         legend,
         angleAxis: {
-            max: 10,
+            max: total,
             startAngle: 90,
             endAngle: 360,
             axisTick: {
@@ -106,7 +106,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $radius, $le
             {
                 name: axis[0],
                 type: 'bar',
-                data: [4, 0],
+                data: [data[0], 0],
                 coordinateSystem: 'polar',
                 barWidth: $barWidth,
                 itemStyle: {
@@ -117,7 +117,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $radius, $le
             {
                 name: axis[1],
                 type: 'bar',
-                data: [0, 4],
+                data: [0, data[1]],
                 coordinateSystem: 'polar',
                 barWidth: $barWidth,
                 itemStyle: {

@@ -97,6 +97,8 @@ const echarts = ref<null>(null)
  */
 const active = ref(0)
 
+let timer = 0
+
 onMounted(() => {
     watch(
         () => props.data,
@@ -138,17 +140,17 @@ onMounted(() => {
                 })
             }
 
-            let timer = setInterval(fn, 5000)
+            active.value = 0
+            clearInterval(timer)
+            timer = setInterval(fn, 5000)
 
             instance.on('mouseover', (e: any) => {
-
                 clearInterval(timer)
 
                 active.value = e.dataIndex
             })
 
             instance.on('mouseout', () => {
-
                 timer = setInterval(fn, 5000)
             })
         },

@@ -34,14 +34,15 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
                         <span class="item__value">158113亩</span>
                     </div>
                 `
-            }
+            },
+            className: 'app-tooltip'
         },
         geo: {
             type: 'map',
             map: 'Map',
             aspectScale: 0.75,
             label: {
-                show: true,
+                show: false,
                 color: '#fff',
                 fontSize: 14,
                 fontFamily: 'PingFang SC',
@@ -53,31 +54,34 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
                 itemStyle: {
                     borderColor: '#FCF903'
                 }
-            },
-            regions: $regions
+            }
+
+            // regions: $regions
         },
         series: [
 
             // 区域图标
-            {
-                type: 'scatter',
-                coordinateSystem: 'geo',
-                symbolSize: [32, 40],
-                symbol: `image://${$icon}`,
-                symbolRotate: 30,
-                symbolOffset: [-15, -25],
-                data: iconData,
-                tooltip: {
-                    showContent: true
-                }
-            },
+            // {
+            //     type: 'scatter',
+            //     coordinateSystem: 'geo',
+            //     symbolSize: [32, 40],
+            //     symbol: `image://${$icon}`,
+
+            //     // symbolRotate: 45,
+            //     symbolOffset: [-25, -25],
+            //     data: iconData,
+            //     tooltip: {
+            //         showContent: true
+            //     }
+            // },
 
             // 标点数据
             {
                 type: 'scatter',
                 coordinateSystem: 'geo',
                 symbolSize: [20, 20],
-                symbolRotate: 30,
+
+                // symbolRotate: 30,
                 data: $markers,
                 tooltip: {
                     showContent: true
