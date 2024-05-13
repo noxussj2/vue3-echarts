@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $center, $legend, $roseType }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $center, $legend, $roseType, $carousel }: any) => {
     const { $color, $tooltip } = useStyle()
 
     /**
@@ -23,8 +23,14 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
         itemGap: 15,
         textStyle: {
             color: $color.legendLabel
-        }
+        },
+        selectedMode: true
     }
+
+    if ($carousel) {
+        legend.selectedMode = false
+    }
+
     if ($legend) {
         const total = $data.reduce((prev: number, next: any) => prev + next.value, 0)
 
@@ -48,6 +54,10 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
         ),
         legend,
         series: [
+
+            /**
+             * 主图
+             */
             {
                 type: 'pie',
                 data: $data,
@@ -60,7 +70,33 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
                 labelLine: {
                     show: $label
                 },
-                roseType: $roseType
+                roseType: $roseType,
+                emphasis: {
+                    disabled: true
+                }
+            },
+
+            /**
+             * 半透明花瓣
+             */
+            {
+                type: 'pie',
+                data: $data,
+                radius: $radius,
+                center: $center,
+                itemStyle: {
+                    opacity: 0.5
+                },
+                label: {
+                    show: false,
+                    color: $color.seriesLabel
+                },
+                labelLine: {
+                    show: false
+                },
+                emphasis: {
+                    scaleSize: 20
+                }
             }
         ]
     }
@@ -68,5 +104,5 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
     /**
      * 继承配置项后渲染图表
      */
-    _echarts.render($dom, extens($opt, options))
+    return await _echarts.render($dom, extens($opt, options))
 }

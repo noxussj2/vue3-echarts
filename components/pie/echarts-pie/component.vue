@@ -1,10 +1,16 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
+
+interface EmitsType {
+    (e: 'carousel', value: Number): void;
+}
+
+const emit = defineEmits<EmitsType>()
 
 const props = defineProps({
 
@@ -14,6 +20,14 @@ const props = defineProps({
     opt: {
         type: Object,
         default: () => ({})
+    },
+
+    /**
+     * 容器宽度
+     */
+    width: {
+        type: String,
+        default: '100%'
     },
 
     /**
@@ -30,13 +44,12 @@ const props = defineProps({
     data: {
         type: Array,
         default: () => [
-
-            // { name: '衬衫', value: 5 },
-            // { name: '羊毛衫', value: 20 },
-            // { name: '雪纺衫', value: 36 },
-            // { name: '裤子', value: 10 },
-            // { name: '高跟鞋', value: 10 },
-            // { name: '袜子', value: 20 }
+            { name: '衬衫', value: 5 },
+            { name: '羊毛衫', value: 20 },
+            { name: '雪纺衫', value: 36 },
+            { name: '裤子', value: 10 },
+            { name: '高跟鞋', value: 10 },
+            { name: '袜子', value: 20 }
         ]
     },
 
@@ -86,16 +99,34 @@ const props = defineProps({
     roseType: {
         type: Boolean,
         default: false
+    },
+
+    /**
+     * 是否启用数据轮播
+     */
+    carousel: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 数据轮播间隔时间
+     */
+    interval: {
+        type: Number,
+        default: 5
     }
 })
 
 const echarts = ref<null>(null)
+const active = ref(0)
+let timer = 0
 
 onMounted(() => {
     watch(
         () => props.data,
-        () => {
-            render({
+        async () => {
+            const instance: any = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
@@ -104,8 +135,79 @@ onMounted(() => {
                 $label: props.label,
                 $center: props.center,
                 $legend: props.legend,
-                $roseType: props.roseType
+                $roseType: props.roseType,
+                $carousel: props.carousel
             })
+
+            /**
+             * 数据轮播
+             */
+            clearTimeout(timer)
+            if (props.carousel) {
+
+                /**
+                 * 清空所有高亮
+                 */
+                const clear = () => {
+                    props.data.forEach((item: any, index: number) => {
+                        instance.dispatchAction({
+                            type: 'downplay',
+                            seriesIndex: 1,
+                            dataIndex: index
+                        })
+                    })
+                }
+
+                /**
+                 * 高亮事件
+                 */
+                const highlight = () => {
+                    clear()
+
+                    instance.dispatchAction({
+                        type: 'highlight',
+                        seriesIndex: 1,
+                        dataIndex: active.value
+                    })
+
+                    emit('carousel', active.value)
+                }
+
+                /**
+                 * 轮播事件
+                 */
+                const carousel = () => {
+                    highlight()
+
+                    active.value += 1
+
+                    if (active.value >= props.data.length) {
+                        active.value = 0
+                    }
+                }
+
+                timer = setInterval(carousel, props.interval * 1000)
+
+                /**
+                 * 鼠标移入事件
+                 * 停止轮播
+                 */
+                instance.on('mouseover', (e: any) => {
+                    clearInterval(timer)
+
+                    active.value = e.dataIndex
+
+                    highlight()
+                })
+
+                /**
+                 * 鼠标移除事件
+                 * 继续轮播
+                 */
+                instance.on('mouseout', () => {
+                    timer = setInterval(carousel, props.interval * 1000)
+                })
+            }
         },
         {
             deep: true,
