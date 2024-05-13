@@ -150,14 +150,6 @@ const props = defineProps({
     areaGradient: {
         type: Boolean,
         default: false
-    },
-
-    /**
-     * 调试
-     */
-    debugger: {
-        type: Boolean,
-        default: false
     }
 })
 
@@ -183,8 +175,7 @@ onMounted(() => {
                 $dataZoomColor: props.dataZoomColor,
                 $carousel: props.carousel,
                 $smooth: props.smooth,
-                $areaGradient: props.areaGradient,
-                $debugger: props.debugger
+                $areaGradient: props.areaGradient
             })
 
             /**

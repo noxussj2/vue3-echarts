@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
 </template>
 
 <script lang="ts" setup>
@@ -14,6 +14,14 @@ const props = defineProps({
     opt: {
         type: Object,
         default: () => ({})
+    },
+
+    /**
+     * 容器宽度
+     */
+    width: {
+        type: String,
+        default: '100%'
     },
 
     /**
@@ -41,7 +49,7 @@ const props = defineProps({
     },
 
     /**
-     * 折线颜色
+     * 折线图颜色
      */
     color: {
         type: Array || null,
@@ -62,10 +70,51 @@ const props = defineProps({
     areaGradient: {
         type: Boolean,
         default: false
+    },
+
+    /**
+     * 是否显示可视区域
+     */
+    dataZoom: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 可视区域显示数量
+     */
+    dataZoomNumber: {
+        type: Number,
+        default: 4
+    },
+
+    /**
+     * 可视区域工具颜色
+     */
+    dataZoomColor: {
+        type: Boolean,
+        default: null
+    },
+
+    /**
+     * 是否启用数据轮播
+     */
+    carousel: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 数据轮播间隔时间
+     */
+    interval: {
+        type: Number,
+        default: 5
     }
 })
 
 const echarts = ref<null>(null)
+let timer = 0
 
 onMounted(() => {
     watch(
@@ -76,34 +125,47 @@ onMounted(() => {
                 $opt: props.opt,
                 $data: props.data,
                 $seriesColor: props.color,
+                $barWidth: props.barWidth,
+                $stack: props.stack,
+                $radius: props.radius,
+                $singleColor: props.singleColor,
+                $showBackground: props.showBackground,
+                $dataZoom: props.dataZoom,
+                $dataZoomNumber: props.dataZoomNumber,
+                $dataZoomColor: props.dataZoomColor,
+                $carousel: props.carousel,
                 $smooth: props.smooth,
-                $areaGradient: props.areaGradient
+                $areaGradient: props.areaGradient,
+                $debugger: props.debugger
             })
 
             /**
              * 数据轮播
              */
-            let startValue = 0
-            let endValue = 4
+            clearTimeout(timer)
+            if (props.carousel) {
+                let startValue = 0
+                let endValue = props.dataZoomNumber - 1
 
-            setInterval(() => {
-                startValue += 1
-                endValue += 1
-                if (endValue > props.data.axis.length - 1) {
-                    startValue = 0
-                    endValue = 4
-                }
+                timer = setInterval(() => {
+                    startValue += 1
+                    endValue += 1
+                    if (endValue > props.data.axis.length - 1) {
+                        startValue = 0
+                        endValue = props.dataZoomNumber - 1
+                    }
 
-                instance.dispatchAction({
-                    type: 'dataZoom',
+                    instance.dispatchAction({
+                        type: 'dataZoom',
 
-                    // 开始位置的数值
-                    startValue,
+                        // 开始位置的数值
+                        startValue,
 
-                    // 结束位置的数值
-                    endValue
-                })
-            }, 5000)
+                        // 结束位置的数值
+                        endValue
+                    })
+                }, props.interval * 1000)
+            }
         },
         {
             deep: true,
