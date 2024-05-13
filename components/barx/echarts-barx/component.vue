@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
 </template>
 
 <script lang="ts" setup>
@@ -14,6 +14,14 @@ const props = defineProps({
     opt: {
         type: Object,
         default: () => ({})
+    },
+
+    /**
+     * 容器宽度
+     */
+    width: {
+        type: String,
+        default: '100%'
     },
 
     /**
@@ -81,19 +89,35 @@ const props = defineProps({
     },
 
     /**
-     * 渐变颜色
-     */
-    gradientColor: {
-        type: Array,
-        default: () => []
-    },
-
-    /**
      * 是否显示背景
      */
     showBackground: {
         type: Boolean,
         default: false
+    },
+
+    /**
+     * 是否显示可视区域
+     */
+    dataZoom: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 可视区域显示数量
+     */
+    dataZoomNumber: {
+        type: Number,
+        default: 4
+    },
+
+    /**
+     * 可视区域工具颜色
+     */
+    dataZoomColor: {
+        type: Boolean,
+        default: null
     },
 
     /**
@@ -120,35 +144,37 @@ onMounted(() => {
                 $stack: props.stack,
                 $radius: props.radius,
                 $singleColor: props.singleColor,
-                $gradientColor: props.gradientColor,
                 $showBackground: props.showBackground,
+                $dataZoom: props.dataZoom,
+                $dataZoomNumber: props.dataZoomNumber,
+                $dataZoomColor: props.dataZoomColor,
                 $debugger: props.debugger
             })
 
             /**
              * 数据轮播
              */
-            let startValue = 0
-            let endValue = 4
+            // let startValue = 0
+            // let endValue = 4
 
-            setInterval(() => {
-                startValue += 1
-                endValue += 1
-                if (endValue > props.data.axis.length - 1) {
-                    startValue = 0
-                    endValue = 4
-                }
+            // setInterval(() => {
+            //     startValue += 1
+            //     endValue += 1
+            //     if (endValue > props.data.axis.length - 1) {
+            //         startValue = 0
+            //         endValue = 4
+            //     }
 
-                instance.dispatchAction({
-                    type: 'dataZoom',
+            //     instance.dispatchAction({
+            //         type: 'dataZoom',
 
-                    // 开始位置的数值
-                    startValue,
+            //         // 开始位置的数值
+            //         startValue,
 
-                    // 结束位置的数值
-                    endValue
-                })
-            }, 5000)
+            //         // 结束位置的数值
+            //         endValue
+            //     })
+            // }, 5000)
         },
         {
             deep: true,

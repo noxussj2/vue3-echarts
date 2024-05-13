@@ -1,9 +1,25 @@
 import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
+import { colorToRgba } from '../../../utils/color'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground, $debugger }: any) => {
+export default async ({
+    $dom,
+    $opt,
+    $data,
+    $seriesColor,
+    $barWidth,
+    $stack,
+    $radius,
+    $singleColor,
+    $showBackground,
+    $dataZoom,
+    $dataZoomNumber,
+    $dataZoomColor
+}: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
+
+    const grid = { ...$grid }
 
     /**
      * 过滤主题色
@@ -22,30 +38,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
             /**
              * 常规颜色
              */
-            let _color = $singleColor ? color[i] : color[index]
-
-            /**
-             * 渐变颜色
-             */
-            if ($gradientColor.length === 2) {
-                _color = {
-                    type: 'linear',
-                    x: 0,
-                    y: 0,
-                    x2: 0,
-                    y2: 1,
-                    colorStops: [
-                        {
-                            offset: 0,
-                            color: $gradientColor[0]
-                        },
-                        {
-                            offset: 1,
-                            color: $gradientColor[1]
-                        }
-                    ]
-                }
-            }
+            const _color = $singleColor ? color[i] : color[index]
 
             data.push({
                 value: x,
@@ -69,21 +62,68 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
     })
 
     /**
+     * 数据缩放
+     */
+    let dataZoom: any = []
+
+    if ($dataZoom) {
+        const _color = $dataZoomColor || $color.theme[0]
+
+        dataZoom = [
+            {
+                show: true,
+                type: 'slider',
+                startValue: 0,
+                endValue: $dataZoomNumber - 1,
+                left: 10,
+                right: 10,
+                backgroundColor: 'transparent',
+                dataBackground: {
+                    lineStyle: {
+                        color: 'transparent'
+                    },
+                    areaStyle: {
+                        color: _color
+                    }
+                },
+                selectedDataBackground: {
+                    lineStyle: {
+                        color: 'transparent'
+                    },
+                    areaStyle: {
+                        color: _color
+                    }
+                },
+                borderColor: colorToRgba(_color, 0.5),
+                handleStyle: {
+                    color: 'transparent',
+                    borderColor: _color
+                },
+                moveHandleSize: 0,
+                fillerColor: colorToRgba(_color, 0.2),
+                labelFormatter: () => '',
+                height: 25,
+                bottom: 10
+            },
+            {
+                show: true,
+                type: 'inside',
+                zoomOnMouseWheel: true,
+                moveOnMouseMove: false,
+                moveOnMouseWheel: false
+            }
+        ]
+
+        grid.bottom = 50
+    }
+
+    /**
      * 导出配置项
      */
     const options = {
         color,
-        grid: $grid,
-        dataZoom: [
-            {
-                type: 'slider',
-                startValue: 0,
-                endValue: 4,
-                handleSize: 8,
-                zoomLock: true,
-                show: false
-            }
-        ],
+        grid,
+        dataZoom,
         tooltip: Object.assign(
             {
                 trigger: 'axis',
