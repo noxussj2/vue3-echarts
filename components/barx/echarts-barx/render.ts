@@ -15,7 +15,8 @@ export default async ({
     $showBackground,
     $dataZoom,
     $dataZoomNumber,
-    $dataZoomColor
+    $dataZoomColor,
+    $carousel
 }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
@@ -62,9 +63,23 @@ export default async ({
     })
 
     /**
-     * 数据缩放
+     * 数据缩放 & 数据轮播
      */
     let dataZoom: any = []
+
+    if ($carousel) {
+        dataZoom = [
+            {
+                show: false,
+                type: 'slider',
+                startValue: 0,
+                endValue: $dataZoomNumber - 1
+            },
+            {
+                show: false
+            }
+        ]
+    }
 
     if ($dataZoom) {
         const _color = $dataZoomColor || $color.theme[0]

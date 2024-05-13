@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
 </template>
 
 <script lang="ts" setup>
@@ -14,6 +14,14 @@ const props = defineProps({
     opt: {
         type: Object,
         default: () => ({})
+    },
+
+    /**
+     * 容器宽度
+     */
+    width: {
+        type: String,
+        default: '100%'
     },
 
     /**
@@ -45,14 +53,6 @@ const props = defineProps({
      */
     color: {
         type: Array || null,
-        default: null
-    },
-
-    /**
-     * 折线图颜色
-     */
-    lineColor: {
-        type: String,
         default: null
     },
 
@@ -89,17 +89,65 @@ const props = defineProps({
     },
 
     /**
-     * 渐变颜色
-     */
-    gradientColor: {
-        type: Array,
-        default: () => []
-    },
-
-    /**
      * 是否显示背景
      */
     showBackground: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 是否显示可视区域
+     */
+    dataZoom: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 可视区域显示数量
+     */
+    dataZoomNumber: {
+        type: Number,
+        default: 4
+    },
+
+    /**
+     * 可视区域工具颜色
+     */
+    dataZoomColor: {
+        type: Boolean,
+        default: null
+    },
+
+    /**
+     * 是否启用数据轮播
+     */
+    carousel: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 数据轮播间隔时间
+     */
+    interval: {
+        type: Number,
+        default: 5
+    },
+
+    /**
+     * 是否曲线
+     */
+    smooth: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 是否开启区域渐变
+     */
+    areaGradient: {
         type: Boolean,
         default: false
     },
@@ -114,6 +162,7 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
+let timer = 0
 
 onMounted(() => {
     watch(
@@ -124,40 +173,47 @@ onMounted(() => {
                 $opt: props.opt,
                 $data: props.data,
                 $seriesColor: props.color,
-                $lineColor: props.lineColor,
                 $barWidth: props.barWidth,
                 $stack: props.stack,
                 $radius: props.radius,
                 $singleColor: props.singleColor,
-                $gradientColor: props.gradientColor,
                 $showBackground: props.showBackground,
+                $dataZoom: props.dataZoom,
+                $dataZoomNumber: props.dataZoomNumber,
+                $dataZoomColor: props.dataZoomColor,
+                $carousel: props.carousel,
+                $smooth: props.smooth,
+                $areaGradient: props.areaGradient,
                 $debugger: props.debugger
             })
 
             /**
              * 数据轮播
              */
-            let startValue = 0
-            let endValue = 4
+            clearTimeout(timer)
+            if (props.carousel) {
+                let startValue = 0
+                let endValue = props.dataZoomNumber - 1
 
-            setInterval(() => {
-                startValue += 1
-                endValue += 1
-                if (endValue > props.data.axis.length - 1) {
-                    startValue = 0
-                    endValue = 4
-                }
+                timer = setInterval(() => {
+                    startValue += 1
+                    endValue += 1
+                    if (endValue > props.data.axis.length - 1) {
+                        startValue = 0
+                        endValue = props.dataZoomNumber - 1
+                    }
 
-                instance.dispatchAction({
-                    type: 'dataZoom',
+                    instance.dispatchAction({
+                        type: 'dataZoom',
 
-                    // 开始位置的数值
-                    startValue,
+                        // 开始位置的数值
+                        startValue,
 
-                    // 结束位置的数值
-                    endValue
-                })
-            }, 5000)
+                        // 结束位置的数值
+                        endValue
+                    })
+                }, props.interval * 1000)
+            }
         },
         {
             deep: true,

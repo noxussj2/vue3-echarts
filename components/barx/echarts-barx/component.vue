@@ -121,6 +121,22 @@ const props = defineProps({
     },
 
     /**
+     * 是否启用数据轮播
+     */
+    carousel: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 数据轮播间隔时间
+     */
+    interval: {
+        type: Number,
+        default: 5
+    },
+
+    /**
      * 调试
      */
     debugger: {
@@ -130,6 +146,7 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
+let timer = 0
 
 onMounted(() => {
     watch(
@@ -148,33 +165,37 @@ onMounted(() => {
                 $dataZoom: props.dataZoom,
                 $dataZoomNumber: props.dataZoomNumber,
                 $dataZoomColor: props.dataZoomColor,
+                $carousel: props.carousel,
                 $debugger: props.debugger
             })
 
             /**
              * 数据轮播
              */
-            // let startValue = 0
-            // let endValue = 4
+            clearTimeout(timer)
+            if (props.carousel) {
+                let startValue = 0
+                let endValue = props.dataZoomNumber - 1
 
-            // setInterval(() => {
-            //     startValue += 1
-            //     endValue += 1
-            //     if (endValue > props.data.axis.length - 1) {
-            //         startValue = 0
-            //         endValue = 4
-            //     }
+                timer = setInterval(() => {
+                    startValue += 1
+                    endValue += 1
+                    if (endValue > props.data.axis.length - 1) {
+                        startValue = 0
+                        endValue = props.dataZoomNumber - 1
+                    }
 
-            //     instance.dispatchAction({
-            //         type: 'dataZoom',
+                    instance.dispatchAction({
+                        type: 'dataZoom',
 
-            //         // 开始位置的数值
-            //         startValue,
+                        // 开始位置的数值
+                        startValue,
 
-            //         // 结束位置的数值
-            //         endValue
-            //     })
-            // }, 5000)
+                        // 结束位置的数值
+                        endValue
+                    })
+                }, props.interval * 1000)
+            }
         },
         {
             deep: true,
