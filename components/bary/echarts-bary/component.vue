@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
 </template>
 
 <script lang="ts" setup>
@@ -14,6 +14,14 @@ const props = defineProps({
     opt: {
         type: Object,
         default: () => ({})
+    },
+
+    /**
+     * 容器宽度
+     */
+    width: {
+        type: String,
+        default: '100%'
     },
 
     /**
@@ -81,14 +89,6 @@ const props = defineProps({
     },
 
     /**
-     * 渐变颜色
-     */
-    gradientColor: {
-        type: Array,
-        default: () => []
-    },
-
-    /**
      * 是否显示背景
      */
     showBackground: {
@@ -120,7 +120,6 @@ onMounted(() => {
                 $stack: props.stack,
                 $radius: props.radius,
                 $singleColor: props.singleColor,
-                $gradientColor: props.gradientColor,
                 $showBackground: props.showBackground,
                 $label: props.label
             })

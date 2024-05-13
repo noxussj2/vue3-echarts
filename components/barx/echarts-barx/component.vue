@@ -134,14 +134,6 @@ const props = defineProps({
     interval: {
         type: Number,
         default: 5
-    },
-
-    /**
-     * 调试
-     */
-    debugger: {
-        type: Boolean,
-        default: false
     }
 })
 
@@ -165,8 +157,7 @@ onMounted(() => {
                 $dataZoom: props.dataZoom,
                 $dataZoomNumber: props.dataZoomNumber,
                 $dataZoomColor: props.dataZoomColor,
-                $carousel: props.carousel,
-                $debugger: props.debugger
+                $carousel: props.carousel
             })
 
             /**

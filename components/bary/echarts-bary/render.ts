@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $gradientColor, $showBackground, $label }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $showBackground, $label }: any) => {
     const { $color, $grid, $tooltip, $horizontal, $legend } = useStyle()
 
     /**
@@ -15,37 +15,14 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
      */
     const series: any = []
     $data.series.forEach((item: any, index: number) => {
-        const data = []
+        const data: any = []
 
         item.data.forEach((x: any, i: number) => {
 
             /**
              * 常规颜色
              */
-            let _color = $singleColor ? color[i] : color[index]
-
-            /**
-             * 渐变颜色
-             */
-            if ($gradientColor.length === 2) {
-                _color = {
-                    type: 'linear',
-                    x: 0,
-                    y: 0,
-                    x2: 1,
-                    y2: 0,
-                    colorStops: [
-                        {
-                            offset: 0,
-                            color: $gradientColor[0]
-                        },
-                        {
-                            offset: 1,
-                            color: $gradientColor[1]
-                        }
-                    ]
-                }
-            }
+            const _color = $singleColor ? color[i] : color[index]
 
             data.push({
                 value: x,
@@ -78,7 +55,13 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
      */
     const options = {
         color,
-        grid: $grid,
+        grid: {
+            top: 20,
+            right: 20,
+            left: 0,
+            bottom: 10,
+            containLabel: true
+        },
         tooltip: Object.assign(
             {
                 trigger: 'axis',
