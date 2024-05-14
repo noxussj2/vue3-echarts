@@ -47,7 +47,13 @@ export default async ({ $dom, $opt, $data, $symbol, $symbolSize }: any) => {
      */
     const options = {
         color: $color.theme,
-        grid: { ...$grid, top: 10 },
+        grid: {
+            top: 20,
+            right: 20,
+            left: 0,
+            bottom: 10,
+            containLabel: true
+        },
         tooltip: Object.assign(
             {
                 trigger: 'axis',

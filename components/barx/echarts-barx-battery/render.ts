@@ -18,8 +18,7 @@ export default async ({
     $dataZoomColor,
     $carousel,
     $smooth,
-    $areaGradient,
-    $symbol
+    $areaGradient
 }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
@@ -97,24 +96,17 @@ export default async ({
         }
 
         /**
-         * 象形图
-         */
-        if (item.type === 'pictorialBar') {
-            series.push({
-                type: 'pictorialBar',
-                name: item.name,
-                data,
-                barWidth: $barWidth,
-                symbol: $symbol
-            })
-        }
-
-        /**
          * 柱状图
          */
-        if (!item.type || item.type === 'bar') {
+        if (!item.type || item.type === 'pictorialBar') {
+            data.forEach((x: any) => {
+                x.symbolSize = ['100%', 3]
+                x.symbolRepeat = true
+                x.symbolMargin = 2
+            })
+
             series.push({
-                type: 'bar',
+                type: 'pictorialBar',
                 name: item.name,
                 data,
                 barWidth: $barWidth,
@@ -122,7 +114,9 @@ export default async ({
                 itemStyle: {
                     borderRadius: $radius
                 },
-                showBackground: $showBackground
+                showBackground: $showBackground,
+                symbol: 'rect',
+                barGap: '30%'
             })
         }
     })

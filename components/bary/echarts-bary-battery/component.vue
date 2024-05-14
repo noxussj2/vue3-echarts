@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
 </template>
 
 <script lang="ts" setup>
@@ -17,6 +17,14 @@ const props = defineProps({
     },
 
     /**
+     * 容器宽度
+     */
+    width: {
+        type: String,
+        default: '100%'
+    },
+
+    /**
      * 容器高度
      */
     height: {
@@ -25,7 +33,7 @@ const props = defineProps({
     },
 
     /**
-     * 数据源
+     * 数据项
      */
     data: {
         type: Object,
@@ -41,7 +49,7 @@ const props = defineProps({
     },
 
     /**
-     * 颜色
+     * 柱状图颜色
      */
     color: {
         type: Array || null,
@@ -53,7 +61,47 @@ const props = defineProps({
      */
     barWidth: {
         type: Number,
-        default: 10
+        default: 8
+    },
+
+    /**
+     * 是否堆叠
+     */
+    stack: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 圆角
+     */
+    radius: {
+        type: Number,
+        default: 0
+    },
+
+    /**
+     * 是否独立颜色
+     */
+    singleColor: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 是否显示背景
+     */
+    showBackground: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 是否显示数值
+     */
+    label: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -68,7 +116,12 @@ onMounted(() => {
                 $opt: props.opt,
                 $data: props.data,
                 $seriesColor: props.color,
-                $barWidth: props.barWidth
+                $barWidth: props.barWidth,
+                $stack: props.stack,
+                $radius: props.radius,
+                $singleColor: props.singleColor,
+                $showBackground: props.showBackground,
+                $label: props.label
             })
         },
         {

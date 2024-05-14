@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $showBackground, $label }: any) => {
     const { $color, $grid, $tooltip, $horizontal, $legend } = useStyle()
 
     /**
@@ -14,12 +14,21 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
      * 数据处理
      */
     const series: any = []
-    $data.series.forEach((item: any) => {
+    $data.series.forEach((item: any, index: number) => {
         const data: any = []
 
         item.data.forEach((x: any, i: number) => {
+
+            /**
+             * 常规颜色
+             */
+            const _color = $singleColor ? color[i] : color[index]
+
             data.push({
                 value: x,
+                itemStyle: {
+                    color: _color
+                },
                 symbolSize: [3, '100%'],
                 symbolRepeat: true,
                 symbolMargin: 2
@@ -31,6 +40,16 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
             name: item.name,
             data,
             barWidth: $barWidth,
+            stack: $stack,
+            label: {
+                show: $label,
+                position: 'right',
+                color: $color.seriesLabel
+            },
+            itemStyle: {
+                borderRadius: $radius
+            },
+            showBackground: $showBackground,
             symbol: 'rect',
             barGap: '30%'
         })
@@ -41,7 +60,13 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
      */
     const options = {
         color,
-        grid: $grid,
+        grid: {
+            top: 20,
+            right: 20,
+            left: 0,
+            bottom: 10,
+            containLabel: true
+        },
         tooltip: Object.assign(
             {
                 trigger: 'axis',
@@ -52,17 +77,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth }: any) => {
             $tooltip
         ),
         legend: Object.assign({}, $legend),
-        xAxis: [
-            {
-                ...$horizontal.xAxis,
-                axisLabel: {
-                    show: false
-                },
-                axisLine: {
-                    show: false
-                }
-            }
-        ],
+        xAxis: [Object.assign({}, $horizontal.xAxis)],
         yAxis: [Object.assign({ data: $data.axis }, $horizontal.yAxis)],
         series
     }
