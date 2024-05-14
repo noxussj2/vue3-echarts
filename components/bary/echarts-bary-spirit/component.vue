@@ -56,7 +56,6 @@ const props = defineProps({
         type: Number,
         default: 20
     }
-
 })
 
 const echarts = ref<null>(null)
