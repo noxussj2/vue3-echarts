@@ -1,4 +1,5 @@
-import { loadStyle } from './styles'
+import { loadStyle } from './styles/index'
+
 import _echarts from './utils/echarts-register'
 import EchartsBarx from './components/barx/echarts-barx/component.vue'
 import EchartsBarxBattery from './components/barx/echarts-barx-battery/component.vue'

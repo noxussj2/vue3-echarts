@@ -2,21 +2,16 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "node",
+        "declaration": true,
+        "outDir": "./dist",
+        "rootDir": "./",
         "strict": true,
-        "jsx": "preserve",
-        "sourceMap": true,
-        "resolveJsonModule": true,
+        "moduleResolution": "node",
         "esModuleInterop": true,
-        "lib": ["esnext", "dom"],
-        "types": ["vite/client", "vite-plugin-svg-icons/client", "node"],
-        "paths": {
-            "@/*": ["src/*"],
-            "utils/*": ["src/utils/*"]
-        },
-        "baseUrl": "./",
         "skipLibCheck": true,
-        "allowImportingTsExtensions": true
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": false
     },
-    "include": ["./shims-vue.d.ts"]
+    "include": ["./index.ts", "components/**/*.vue"], // 包含的文件
+    "exclude": ["node_modules"]
 }

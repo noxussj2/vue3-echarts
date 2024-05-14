@@ -286,3 +286,16 @@ export const useStyle = () => {
 export const loadStyle = (style: any) => {
     window.$v3echarts = style
 }
+
+declare global {
+    interface Window {
+        $v3echarts: {
+            $color: any;
+            $grid: any;
+            $tooltip: any;
+            $legend: any;
+            $vertical: any;
+            $horizontal: any;
+        };
+    }
+}
