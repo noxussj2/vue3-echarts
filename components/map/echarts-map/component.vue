@@ -111,8 +111,6 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    // transform: translateX(-40%) translateY(-300%);
-    // transform: rotate(-30deg) translateX(-40%) translateY(-300%);
 
     .item__name {
         color: #fff;
