@@ -134,6 +134,22 @@ const props = defineProps({
     interval: {
         type: Number,
         default: 5
+    },
+
+    /**
+     * 是否曲线
+     */
+    smooth: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 是否开启区域渐变
+     */
+    areaGradient: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -157,7 +173,9 @@ onMounted(() => {
                 $dataZoom: props.dataZoom,
                 $dataZoomNumber: props.dataZoomNumber,
                 $dataZoomColor: props.dataZoomColor,
-                $carousel: props.carousel
+                $carousel: props.carousel,
+                $smooth: props.smooth,
+                $areaGradient: props.areaGradient
             })
 
             /**

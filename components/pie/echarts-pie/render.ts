@@ -13,7 +13,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
     /**
      * 图例格式化
      */
-    const legend = {
+    const legend: any = {
         show: $legend,
         orient: 'vertical',
         top: 'center',

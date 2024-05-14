@@ -16,7 +16,9 @@ export default async ({
     $dataZoom,
     $dataZoomNumber,
     $dataZoomColor,
-    $carousel
+    $carousel,
+    $smooth,
+    $areaGradient
 }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
@@ -49,17 +51,60 @@ export default async ({
             })
         })
 
-        series.push({
-            type: 'bar',
-            name: item.name,
-            data,
-            barWidth: $barWidth,
-            stack: $stack,
-            itemStyle: {
-                borderRadius: $radius
-            },
-            showBackground: $showBackground
-        })
+        if (item.type === 'line') {
+
+            /**
+             * 渐变颜色
+             */
+            let gradientColor: any = 'rgba(0, 0, 0, 0)'
+            if ($areaGradient) {
+                const color1 = colorToRgba(color[index], 1)
+                const color2 = colorToRgba(color[index], 0)
+
+                gradientColor = {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 0,
+                    y2: 1,
+                    colorStops: [
+                        {
+                            offset: 0,
+                            color: color1
+                        },
+                        {
+                            offset: 1,
+                            color: color2
+                        }
+                    ]
+                }
+            }
+
+            series.push({
+                type: 'line',
+                name: item.name,
+                data,
+                smooth: $smooth,
+                areaStyle: {
+                    color: gradientColor
+                },
+                yAxisIndex: 1
+            })
+        }
+
+        if (!item.type || item.type === 'bar') {
+            series.push({
+                type: 'bar',
+                name: item.name,
+                data,
+                barWidth: $barWidth,
+                stack: $stack,
+                itemStyle: {
+                    borderRadius: $radius
+                },
+                showBackground: $showBackground
+            })
+        }
     })
 
     /**
@@ -150,7 +195,20 @@ export default async ({
         ),
         legend: Object.assign({}, $legend),
         xAxis: Object.assign({ data: $data.axis }, $vertical.xAxis),
-        yAxis: [Object.assign({}, $vertical.yAxis)],
+        yAxis: [
+            { ...$vertical.yAxis },
+            {
+                ...$vertical.yAxis,
+                axisLabel: {
+                    show: false,
+                    color: $color.yAxisLabel,
+                    formatter: '{value} %'
+                },
+                splitLine: {
+                    show: false
+                }
+            }
+        ],
         series
     }
 
