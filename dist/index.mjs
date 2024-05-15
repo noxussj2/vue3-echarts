@@ -213,16 +213,19 @@ const Pn = {
     }
   }
 };
-window.$v3echarts = {
+typeof window < "u" && (window.$v3echarts = {
   $color: Pn,
   $grid: zk,
   $tooltip: Wk,
   $legend: Hk,
   $vertical: $k,
   $horizontal: Uk
-};
-const Ho = () => window.$v3echarts, Vct = (r) => {
-  window.$v3echarts = r;
+});
+const Ho = () => {
+  if (typeof window < "u")
+    return window.$v3echarts;
+}, Vct = (r) => {
+  typeof window < "u" && (window.$v3echarts = r);
 };
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.

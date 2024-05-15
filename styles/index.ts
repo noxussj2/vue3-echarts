@@ -270,21 +270,27 @@ const $horizontal = {
     }
 }
 
-window.$v3echarts = {
-    $color,
-    $grid,
-    $tooltip,
-    $legend,
-    $vertical,
-    $horizontal
+if (typeof window !== 'undefined') {
+    window.$v3echarts = {
+        $color,
+        $grid,
+        $tooltip,
+        $legend,
+        $vertical,
+        $horizontal
+    }
 }
 
 export const useStyle = () => {
-    return window.$v3echarts
+    if (typeof window !== 'undefined') {
+        return window.$v3echarts
+    }
 }
 
 export const loadStyle = (style: any) => {
-    window.$v3echarts = style
+    if (typeof window !== 'undefined') {
+        window.$v3echarts = style
+    }
 }
 
 declare global {
