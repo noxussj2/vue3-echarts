@@ -5,6 +5,8 @@ import * as echarts from 'echarts'
 export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => {
     echarts.registerMap('Map', $json)
 
+    console.log($json)
+
     /**
      * 处理区域图标数据
      */

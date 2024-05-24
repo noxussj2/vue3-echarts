@@ -13,4 +13,6 @@ import EchartsPie from './components/pie/echarts-pie/component.vue'
 
 import EchartsMap from './components/map/echarts-map/component.vue'
 
-export { loadStyle, _echarts, EchartsBarx, EchartsBarxBattery, EchartsBary, EchartsBaryBattery, EchartsBarySpirit, EchartsLine, EchartsPie, EchartsMap }
+import EchartsPolar from './components/polar/echarts-polar/component.vue'
+
+export { loadStyle, _echarts, EchartsBarx, EchartsBarxBattery, EchartsBary, EchartsBaryBattery, EchartsBarySpirit, EchartsLine, EchartsPie, EchartsMap, EchartsPolar }
