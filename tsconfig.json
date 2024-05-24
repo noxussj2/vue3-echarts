@@ -13,5 +13,5 @@
         "noImplicitAny": false
     },
     "include": ["./index.ts", "components/**/*.vue"], // 包含的文件
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "dist"]
 }
