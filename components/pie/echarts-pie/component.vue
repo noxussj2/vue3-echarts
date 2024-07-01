@@ -125,7 +125,7 @@ let timer = 0
 onMounted(() => {
     watch(
         () => props.data,
-        async () => {
+        async (data) => {
             const instance: any = await render({
                 $dom: echarts,
                 $opt: props.opt,
@@ -143,7 +143,7 @@ onMounted(() => {
              * 数据轮播
              */
             clearTimeout(timer)
-            if (props.carousel) {
+            if (props.carousel && data.length) {
 
                 /**
                  * 清空所有高亮
@@ -186,6 +186,8 @@ onMounted(() => {
                     }
                 }
 
+                highlight()
+
                 timer = setInterval(carousel, props.interval * 1000)
 
                 /**
@@ -205,6 +207,8 @@ onMounted(() => {
                  * 继续轮播
                  */
                 instance.on('mouseout', () => {
+                    clearInterval(timer)
+
                     timer = setInterval(carousel, props.interval * 1000)
                 })
             }

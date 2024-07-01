@@ -85,7 +85,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
                 radius: $radius,
                 center: $center,
                 itemStyle: {
-                    opacity: 0.5
+                    opacity: 0.4
                 },
                 label: {
                     show: false,
@@ -94,8 +94,9 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
                 labelLine: {
                     show: false
                 },
+                roseType: $roseType,
                 emphasis: {
-                    scaleSize: 20
+                    scaleSize: 15
                 }
             }
         ]

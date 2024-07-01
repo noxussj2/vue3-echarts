@@ -16,6 +16,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
     /**
      * 数据处理
      */
+    const yAxisNames: any = []
     const series: any = []
     $data.series.forEach((item: any, index: number) => {
         const data: any = []
@@ -71,6 +72,8 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
                 color: gradientColor
             }
         })
+
+        yAxisNames.push(`（${item.unit}）`)
     })
 
     /**
@@ -162,9 +165,14 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
         legend: Object.assign({}, $legend),
         xAxis: Object.assign({ data: $data.axis }, $vertical.xAxis),
         yAxis: [
-            { ...$vertical.yAxis },
             {
                 ...$vertical.yAxis,
+                name: yAxisNames[0]
+            },
+            {
+                ...$vertical.yAxis,
+                show: false,
+                name: yAxisNames[1],
                 axisLabel: {
                     show: false,
                     color: $color.yAxisLabel,

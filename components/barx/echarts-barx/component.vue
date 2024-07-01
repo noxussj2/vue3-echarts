@@ -6,6 +6,12 @@
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
 
+interface EmitsType {
+    (e: 'click', value: any): void;
+}
+
+const emit = defineEmits<EmitsType>()
+
 const props = defineProps({
 
     /**
@@ -169,6 +175,8 @@ onMounted(() => {
     watch(
         () => props.data,
         async () => {
+            console.log(666)
+
             const instance: any = await render({
                 $dom: echarts,
                 $opt: props.opt,
@@ -215,6 +223,14 @@ onMounted(() => {
                     })
                 }, props.interval * 1000)
             }
+
+            /**
+             * 点击事件
+             */
+            instance.off('click')
+            instance.on('click', (e: any) => {
+                emit('click', e)
+            })
         },
         {
             deep: true,
