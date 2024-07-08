@@ -119,6 +119,9 @@ onMounted(() => {
     watch(
         () => props.data,
         () => {
+            if (!props.data) return
+            if (props.data.series.length === 0) return
+
             render({
                 $dom: echarts,
                 $opt: props.opt,
