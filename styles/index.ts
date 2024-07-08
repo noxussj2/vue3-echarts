@@ -248,6 +248,7 @@ const $horizontal = {
     xAxis: {
         type: 'value',
         axisLabel: {
+            show: false,
             color: $color.xAxisLabel,
             fontSize: $fontSize.xAxisLabel
         },
