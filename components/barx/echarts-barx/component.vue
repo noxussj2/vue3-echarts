@@ -169,13 +169,14 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
-let timer = 0
+let timer: any = 0
 
 onMounted(() => {
     watch(
         () => props.data,
         async () => {
-            console.log(666)
+            if (!props.data) return
+            if (props.data.axis.legnth === 0) return
 
             const instance: any = await render({
                 $dom: echarts,

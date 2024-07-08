@@ -53,7 +53,9 @@ export default async ({
             })
         })
 
-        yAxisNames.push(`（${item.unit}）`)
+        if (item.unit) {
+            yAxisNames.push(`（${item.unit}）`)
+        }
 
         /**
          * 折线图
@@ -221,12 +223,12 @@ export default async ({
         yAxis: [
             {
                 ...$vertical.yAxis,
-                name: yAxisNames[0]
+                name: yAxisNames[0] || ''
             },
             {
                 ...$vertical.yAxis,
                 show: false,
-                name: yAxisNames[1],
+                name: yAxisNames[1] || '',
                 axisLabel: {
                     show: false,
                     color: $color.yAxisLabel,
