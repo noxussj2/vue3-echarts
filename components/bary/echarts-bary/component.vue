@@ -97,6 +97,14 @@ const props = defineProps({
     },
 
     /**
+     * 背景颜色
+     */
+    backgroundColor: {
+        type: String,
+        default: ''
+    },
+
+    /**
      * 是否显示数值
      */
     label: {
@@ -121,6 +129,7 @@ onMounted(() => {
                 $radius: props.radius,
                 $singleColor: props.singleColor,
                 $showBackground: props.showBackground,
+                $backgroundColor: props.backgroundColor,
                 $label: props.label
             })
         },

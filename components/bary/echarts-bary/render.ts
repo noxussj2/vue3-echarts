@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $showBackground, $label }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $showBackground, $backgroundColor, $label }: any) => {
     const { $color, $grid, $tooltip, $horizontal, $legend } = useStyle()
 
     /**
@@ -46,7 +46,10 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
             itemStyle: {
                 borderRadius: $radius
             },
-            showBackground: $showBackground
+            showBackground: $showBackground,
+            backgroundStyle: {
+                color: $backgroundColor
+            }
         })
     })
 
