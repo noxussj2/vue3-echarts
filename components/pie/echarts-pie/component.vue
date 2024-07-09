@@ -8,6 +8,7 @@ import render from './render'
 
 interface EmitsType {
     (e: 'carousel', value: Number): void;
+    (e: 'click', value: any): void;
 }
 
 const emit = defineEmits<EmitsType>()
@@ -120,7 +121,7 @@ const props = defineProps({
 
 const echarts = ref<null>(null)
 const active = ref(0)
-let timer = 0
+let timer: any = 0
 
 onMounted(() => {
     watch(
@@ -210,6 +211,14 @@ onMounted(() => {
                     clearInterval(timer)
 
                     timer = setInterval(carousel, props.interval * 1000)
+                })
+
+                /**
+                 * 鼠标移除事件
+                 * 继续轮播
+                 */
+                instance.on('click', (e: any) => {
+                    emit('click', e.data)
                 })
             }
         },
