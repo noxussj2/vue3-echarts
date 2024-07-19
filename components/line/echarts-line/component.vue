@@ -12,7 +12,7 @@ const props = defineProps({
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
     opt: {
-        type: Object,
+        type: [Object, Function],
         default: () => ({})
     },
 
@@ -122,7 +122,7 @@ onMounted(() => {
         async () => {
             const instance: any = await render({
                 $dom: echarts,
-                $opt: props.opt,
+                $opt: typeof props.opt === 'function' ? props.opt() : props.opt,
                 $data: props.data,
                 $seriesColor: props.color,
                 $barWidth: props.barWidth,
