@@ -120,51 +120,53 @@ onMounted(() => {
     watch(
         () => props.data,
         async () => {
-            const instance: any = await render({
-                $dom: echarts,
-                $opt: typeof props.opt === 'function' ? props.opt() : props.opt,
-                $data: props.data,
-                $seriesColor: props.color,
-                $barWidth: props.barWidth,
-                $stack: props.stack,
-                $radius: props.radius,
-                $singleColor: props.singleColor,
-                $showBackground: props.showBackground,
-                $dataZoom: props.dataZoom,
-                $dataZoomNumber: props.dataZoomNumber,
-                $dataZoomColor: props.dataZoomColor,
-                $carousel: props.carousel,
-                $smooth: props.smooth,
-                $areaGradient: props.areaGradient,
-                $debugger: props.debugger
-            })
+            if (props.data) {
+                const instance: any = await render({
+                    $dom: echarts,
+                    $opt: typeof props.opt === 'function' ? props.opt() : props.opt,
+                    $data: props.data,
+                    $seriesColor: props.color,
+                    $barWidth: props.barWidth,
+                    $stack: props.stack,
+                    $radius: props.radius,
+                    $singleColor: props.singleColor,
+                    $showBackground: props.showBackground,
+                    $dataZoom: props.dataZoom,
+                    $dataZoomNumber: props.dataZoomNumber,
+                    $dataZoomColor: props.dataZoomColor,
+                    $carousel: props.carousel,
+                    $smooth: props.smooth,
+                    $areaGradient: props.areaGradient,
+                    $debugger: props.debugger
+                })
 
-            /**
-             * 数据轮播
-             */
-            clearTimeout(timer)
-            if (props.carousel) {
-                let startValue = 0
-                let endValue = props.dataZoomNumber - 1
+                /**
+                 * 数据轮播
+                 */
+                clearTimeout(timer)
+                if (props.carousel) {
+                    let startValue = 0
+                    let endValue = props.dataZoomNumber - 1
 
-                timer = setInterval(() => {
-                    startValue += 1
-                    endValue += 1
-                    if (endValue > props.data.axis.length - 1) {
-                        startValue = 0
-                        endValue = props.dataZoomNumber - 1
-                    }
+                    timer = setInterval(() => {
+                        startValue += 1
+                        endValue += 1
+                        if (endValue > props.data.axis.length - 1) {
+                            startValue = 0
+                            endValue = props.dataZoomNumber - 1
+                        }
 
-                    instance.dispatchAction({
-                        type: 'dataZoom',
+                        instance.dispatchAction({
+                            type: 'dataZoom',
 
-                        // 开始位置的数值
-                        startValue,
+                            // 开始位置的数值
+                            startValue,
 
-                        // 结束位置的数值
-                        endValue
-                    })
-                }, props.interval * 1000)
+                            // 结束位置的数值
+                            endValue
+                        })
+                    }, props.interval * 1000)
+                }
             }
         },
         {
