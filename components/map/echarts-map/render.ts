@@ -21,7 +21,7 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
      */
     const options = {
         tooltip: {
-            show: true,
+            show: false,
             showContent: false,
             backgroundColor: 'rgba(255, 255, 255, 0)',
             borderColor: 'rgba(255, 255, 255, 0)',
@@ -79,7 +79,7 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
             {
                 type: 'scatter',
                 coordinateSystem: 'geo',
-                symbolSize: [20, 20],
+                symbolSize: [66, 66],
 
                 // symbolRotate: 30,
                 data: $markers,
