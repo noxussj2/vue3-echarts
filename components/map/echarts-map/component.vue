@@ -7,7 +7,7 @@ import { onMounted, ref, watch } from 'vue'
 import render from './render'
 
 interface EmitsType {
-    (e: 'region', value: String): void;
+    (e: 'region', value: any): void;
     (e: 'marker', value: any[]): void;
 }
 
@@ -81,7 +81,7 @@ onMounted(() => {
                         const find = props.json.features.find((item: any) => item.properties.name === e.name)
 
                         if (find.properties.adcode) {
-                            emit('region', String(find.properties.adcode))
+                            emit('region', { code: String(find.properties.adcode), name: e.name })
                         }
                     }
 

@@ -19,7 +19,8 @@ export default async ({
     $carousel,
     $smooth,
     $areaGradient,
-    $symbol
+    $symbol,
+    $debugger
 }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
@@ -245,5 +246,9 @@ export default async ({
     /**
      * 继承配置项后渲染图表
      */
+    if ($debugger) {
+        console.log('debugger', extens($opt, options))
+    }
+
     return _echarts.render($dom, extens($opt, options))
 }

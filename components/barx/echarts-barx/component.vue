@@ -165,6 +165,22 @@ const props = defineProps({
         type: String,
         default:
             'path://d="M34.2,89.2c-0.7-16-3.4-69.2-3.9-78.8c1.7,0,3-1.4,3-3.1c0-1.7-1.4-3.1-3.1-3.1s-3.1,1.4-3.1,3.1c0,1.7,1.4,3,3,3.1c-0.4,9.6-2.5,63.2-3.9,78.3c-1.6,16.2-4.2,53.2-22.5,95.7h54C57.7,184.5,36.7,143.2,34.2,89.2z"'
+    },
+
+    /**
+     * 调试，打印配置信息
+     */
+    debugger: {
+        type: Boolean,
+        default: false
+    },
+
+    /**
+     * 轮播数量
+     */
+    carouselNumber: {
+        type: Number,
+        default: 1
     }
 })
 
@@ -194,23 +210,38 @@ onMounted(() => {
                 $carousel: props.carousel,
                 $smooth: props.smooth,
                 $areaGradient: props.areaGradient,
-                $symbol: props.symbol
+                $symbol: props.symbol,
+                $debugger: props.debugger
             })
 
             /**
              * 数据轮播
              */
-            clearTimeout(timer)
-            if (props.carousel) {
-                let startValue = 0
-                let endValue = props.dataZoomNumber - 1
+            clearInterval(timer) // 使用 clearInterval
+            let startValue = 0
+            let endValue = props.dataZoomNumber - 1
+
+            const fn = () => {
+                clearInterval(timer) // 确保清除之前的定时器
 
                 timer = setInterval(() => {
-                    startValue += 1
-                    endValue += 1
-                    if (endValue > props.data.axis.length - 1) {
-                        startValue = 0
-                        endValue = props.dataZoomNumber - 1
+                    startValue += props.carouselNumber
+                    endValue += props.carouselNumber
+
+                    // 如果 endValue 超过数据长度，需要根据剩余的数据数量调整
+                    if (endValue >= props.data.axis.length) {
+
+                        // 如果剩余数据不足一个 carouselNumber，展示最后一段数据
+                        if (startValue < props.data.axis.length) {
+                            startValue = props.data.axis.length - (props.data.axis.length % props.carouselNumber)
+                            endValue = props.data.axis.length - 1
+                        }
+                        else {
+
+                            // 数据展示完毕，重置回起始位置
+                            startValue = 0
+                            endValue = props.dataZoomNumber - 1
+                        }
                     }
 
                     instance.dispatchAction({
@@ -224,6 +255,38 @@ onMounted(() => {
                     })
                 }, props.interval * 1000)
             }
+
+            if (props.carousel) {
+                fn()
+            }
+
+            /**
+             * 手动数据轮播
+             */
+            instance.on('datazoom', (e) => {
+                if (!e.batch) return
+
+                clearTimeout(timer)
+
+                startValue = -1
+                endValue = props.dataZoomNumber - 2
+            })
+
+            /**
+             * 鼠标移入事件
+             */
+            instance.getZr().on('mousemove', function (params) {
+                clearTimeout(timer)
+            })
+
+            /**
+             * 鼠标移出事件
+             */
+            instance.getZr().on('mouseout', function (params) {
+                if (props.carousel) {
+                    fn()
+                }
+            })
 
             /**
              * 点击事件
