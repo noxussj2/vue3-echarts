@@ -41,16 +41,26 @@ export default async ({
         item.data.forEach((x: any, i: number) => {
 
             /**
-             * 常规颜色
+             * 设置独立颜色
              */
-            const _color = $singleColor ? color[i] : color[index]
+            if ($singleColor) {
+                const _color = $singleColor ? color[i] : color[index]
 
-            data.push({
-                value: x,
-                itemStyle: {
-                    color: _color
-                }
-            })
+                data.push({
+                    value: x,
+                    itemStyle: {
+                        color: _color
+                    }
+                })
+            }
+
+            /**
+             * 不设置颜色
+             */
+            if (!$singleColor) {
+                data.push(x)
+            }
+
         })
 
         if (item.unit) {
@@ -245,5 +255,6 @@ export default async ({
     /**
      * 继承配置项后渲染图表
      */
+    console.log('options', options)
     return _echarts.render($dom, extens($opt, options))
 }
