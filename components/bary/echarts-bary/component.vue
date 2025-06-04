@@ -5,9 +5,9 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
+import { echartsFlush } from '../../../styles'
 
 const props = defineProps({
-
     /**
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
@@ -117,7 +117,7 @@ const echarts = ref<null>(null)
 
 onMounted(() => {
     watch(
-        () => props.data,
+        () => [props.data, echartsFlush.value],
         () => {
             if (!props.data) return
             if (props.data.series.length === 0) return

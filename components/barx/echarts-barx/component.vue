@@ -5,15 +5,15 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
+import { echartsFlush } from '../../../styles'
 
 interface EmitsType {
-    (e: 'click', value: any): void;
+    (e: 'click', value: any): void
 }
 
 const emit = defineEmits<EmitsType>()
 
 const props = defineProps({
-
     /**
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
@@ -189,7 +189,7 @@ let timer: any = 0
 
 onMounted(() => {
     watch(
-        () => props.data,
+        () => [props.data, echartsFlush.value],
         async () => {
             if (!props.data) return
             if (props.data.axis.legnth === 0) return
@@ -230,14 +230,11 @@ onMounted(() => {
 
                     // 如果 endValue 超过数据长度，需要根据剩余的数据数量调整
                     if (endValue >= props.data.axis.length) {
-
                         // 如果剩余数据不足一个 carouselNumber，展示最后一段数据
                         if (startValue < props.data.axis.length) {
                             startValue = props.data.axis.length - (props.data.axis.length % props.carouselNumber)
                             endValue = props.data.axis.length - 1
-                        }
-                        else {
-
+                        } else {
                             // 数据展示完毕，重置回起始位置
                             startValue = 0
                             endValue = props.dataZoomNumber - 1

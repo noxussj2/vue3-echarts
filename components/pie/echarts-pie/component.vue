@@ -5,6 +5,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
+import { echartsFlush } from '../../../styles';
 
 interface EmitsType {
     (e: 'carousel', value: Number): void;
@@ -125,7 +126,7 @@ let timer: any = 0
 
 onMounted(() => {
     watch(
-        () => props.data,
+        () => [props.data, echartsFlush.value],
         async (data) => {
             const instance: any = await render({
                 $dom: echarts,

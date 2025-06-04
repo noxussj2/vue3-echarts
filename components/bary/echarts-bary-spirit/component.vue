@@ -6,6 +6,7 @@
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
 import icon from './icon-spirit.png'
+import { echartsFlush } from '../../../styles'
 
 const props = defineProps({
 
@@ -62,7 +63,7 @@ const echarts = ref<null>(null)
 
 onMounted(() => {
     watch(
-        () => props.data,
+        () => [props.data, echartsFlush.value],
         () => {
             render({
                 $dom: echarts,

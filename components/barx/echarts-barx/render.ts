@@ -24,6 +24,7 @@ export default async ({
 }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
+
     const grid = { ...$grid }
 
     /**

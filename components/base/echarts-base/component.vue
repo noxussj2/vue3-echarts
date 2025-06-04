@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import render from './render'
+import { echartsFlush } from '../../../styles'
 
 const props = defineProps({
-
     /**
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
@@ -38,9 +38,18 @@ const echarts = ref<null>(null)
 onMounted(() => {
     console.log('echarts.value', echarts.value)
 
-    render({
-        $dom: echarts,
-        $opt: props.opt
-    })
+    watch(
+        () => [echartsFlush.value],
+        () => {
+            render({
+                $dom: echarts,
+                $opt: props.opt
+            })
+        },
+        {
+            deep: true,
+            immediate: true
+        }
+    )
 })
 </script>
