@@ -167,12 +167,12 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
         yAxis: [
             {
                 ...$vertical.yAxis,
-                name: yAxisNames[0]
+                name: yAxisNames[0] || ''
             },
             {
                 ...$vertical.yAxis,
                 show: false,
-                name: yAxisNames[1],
+                name: yAxisNames[1] || '',
                 axisLabel: {
                     show: false,
                     color: $color.yAxisLabel,
