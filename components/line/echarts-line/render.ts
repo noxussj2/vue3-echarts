@@ -22,7 +22,6 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
         const data: any = []
 
         item.data.forEach((x: any, i: number) => {
-
             /**
              * 常规颜色
              */
@@ -73,7 +72,8 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
             }
         })
 
-        yAxisNames.push(`（${item.unit}）`)
+        const unit = item.unit ? `（${item.unit}）` : ''
+        yAxisNames.push(unit)
     })
 
     /**
@@ -167,12 +167,12 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
         yAxis: [
             {
                 ...$vertical.yAxis,
-                name: yAxisNames[0] || ''
+                name: yAxisNames[0]
             },
             {
                 ...$vertical.yAxis,
                 show: false,
-                name: yAxisNames[1] || '',
+                name: yAxisNames[1],
                 axisLabel: {
                     show: false,
                     color: $color.yAxisLabel,

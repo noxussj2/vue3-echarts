@@ -49916,12 +49916,12 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     yAxis: [
       {
         ...d.yAxis,
-        name: m[0]
+        name: m[0] || ""
       },
       {
         ...d.yAxis,
         show: !1,
-        name: m[1],
+        name: m[1] || "",
         axisLabel: {
           show: !1,
           color: h.yAxisLabel,
