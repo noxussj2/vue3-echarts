@@ -158,7 +158,7 @@ let timer = 0
 
 onMounted(() => {
     watch(
-        () => [props.data, echartsFlush.value],
+        () => [props.data, echartsFlush.value, props.color],
         async () => {
             const instance: any = await render({
                 $dom: echarts,

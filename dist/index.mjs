@@ -48644,7 +48644,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
       barWidth: a,
       stack: i,
       itemStyle: {
-        borderRadius: o
+        borderRadius: Number(o)
       },
       showBackground: l
     });
@@ -48902,10 +48902,11 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     let i = 0;
     return Kn(() => {
       jn(
-        () => [n.data, _n.value],
+        () => ({ ...n, echartsFlush: _n.value }),
         async () => {
           if (!n.data || n.data.axis.legnth === 0)
             return;
+          console.log("render", "echarts-barx");
           const o = await Dct({
             $dom: a,
             $opt: n.opt,
@@ -48957,7 +48958,8 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
       ref_key: "echarts",
       ref: a,
       class: "echarts",
-      style: ta({ width: n.width, height: n.height })
+      style: ta({ width: n.width, height: n.height }),
+      key: n.height
     }, null, 4));
   }
 }), Mct = async ({
@@ -49263,7 +49265,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     let n = 0;
     return Kn(() => {
       jn(
-        () => [t.data, _n.value],
+        () => [t.data, _n.value, t.color],
         async () => {
           const a = await Mct({
             $dom: e,
@@ -49331,7 +49333,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
         color: h.seriesLabel
       },
       itemStyle: {
-        borderRadius: o
+        borderRadius: Number(o)
       },
       showBackground: l,
       backgroundStyle: {
@@ -49463,7 +49465,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     const t = r, e = Qr(null);
     return Kn(() => {
       jn(
-        () => [t.data, _n.value],
+        () => ({ ...t, echartsFlush: _n.value }),
         () => {
           t.data && t.data.series.length !== 0 && Ict({
             $dom: e,
@@ -49488,7 +49490,8 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
       ref_key: "echarts",
       ref: e,
       class: "echarts",
-      style: ta({ width: t.width, height: t.height })
+      style: ta({ width: t.width, height: t.height }),
+      key: t.height
     }, null, 4));
   }
 }), Lct = async ({ $dom: r, $opt: t, $data: e, $seriesColor: n, $barWidth: a, $stack: i, $radius: o, $singleColor: s, $showBackground: l, $label: u }) => {
@@ -49642,7 +49645,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     const t = r, e = Qr(null);
     return Kn(() => {
       jn(
-        () => [t.data, _n.value],
+        () => [t.data, _n.value, t.color],
         () => {
           Lct({
             $dom: e,
@@ -49800,18 +49803,18 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
   const { $color: h, $grid: c, $tooltip: v, $vertical: d, $legend: p } = Di(), g = { ...c }, y = n || h.theme, m = [], _ = [];
   e.series.forEach((S, w) => {
     const A = [];
-    S.data.forEach((D, M) => {
-      const I = a ? y[M] : y[w];
+    S.data.forEach((M, I) => {
+      const E = a ? y[I] : y[w];
       A.push({
-        value: D,
+        value: M,
         itemStyle: {
-          color: I
+          color: E
         }
       });
     });
     let T = "rgba(0, 0, 0, 0)";
     if (f) {
-      const D = Zr(y[w], 1), M = Zr(y[w], 0);
+      const M = Zr(y[w], 1), I = Zr(y[w], 0);
       T = {
         type: "linear",
         x: 0,
@@ -49821,11 +49824,11 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
         colorStops: [
           {
             offset: 0,
-            color: D
+            color: M
           },
           {
             offset: 1,
-            color: M
+            color: I
           }
         ]
       };
@@ -49838,7 +49841,9 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
       areaStyle: {
         color: T
       }
-    }), m.push(`（${S.unit}）`);
+    });
+    const D = S.unit ? `（${S.unit}）` : "";
+    m.push(D);
   });
   let x = [];
   if (l && (x = [
@@ -49916,12 +49921,12 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     yAxis: [
       {
         ...d.yAxis,
-        name: m[0] || ""
+        name: m[0]
       },
       {
         ...d.yAxis,
         show: !1,
-        name: m[1] || "",
+        name: m[1],
         axisLabel: {
           show: !1,
           color: h.yAxisLabel,
@@ -50036,7 +50041,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     let n = 0;
     return Kn(() => {
       jn(
-        () => [t.data, _n.value],
+        () => ({ ...t, echartsFlush: _n.value }),
         async () => {
           if (t.data) {
             const a = await Rct({
@@ -50044,18 +50049,12 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
               $opt: typeof t.opt == "function" ? t.opt() : t.opt,
               $data: t.data,
               $seriesColor: t.color,
-              $barWidth: t.barWidth,
-              $stack: t.stack,
-              $radius: t.radius,
-              $singleColor: t.singleColor,
-              $showBackground: t.showBackground,
               $dataZoom: t.dataZoom,
               $dataZoomNumber: t.dataZoomNumber,
               $dataZoomColor: t.dataZoomColor,
               $carousel: t.carousel,
               $smooth: t.smooth,
-              $areaGradient: t.areaGradient,
-              $debugger: t.debugger
+              $areaGradient: t.areaGradient
             });
             if (clearTimeout(n), t.carousel) {
               let i = 0, o = t.dataZoomNumber - 1;
@@ -50080,7 +50079,8 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
       ref_key: "echarts",
       ref: e,
       class: "echarts",
-      style: ta({ width: t.width, height: t.height })
+      style: ta({ width: t.width, height: t.height }),
+      key: t.height
     }, null, 4));
   }
 }), Nct = async ({ $dom: r, $opt: t, $data: e, $seriesColor: n, $radius: a, $label: i, $center: o, $legend: s, $roseType: l, $carousel: u }) => {
@@ -50261,7 +50261,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     let o = 0;
     return Kn(() => {
       jn(
-        () => [n.data, _n.value],
+        () => ({ ...n, echartsFlush: _n.value }),
         async (s) => {
           const l = await Nct({
             $dom: a,
@@ -50311,7 +50311,8 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
       ref_key: "echarts",
       ref: a,
       class: "echarts",
-      style: ta({ width: n.width, height: n.height })
+      style: ta({ width: n.width, height: n.height }),
+      key: n.height
     }, null, 4));
   }
 }), Oct = async ({ $dom: r, $opt: t, $json: e, $markers: n, $icon: a, $regions: i }) => {
@@ -50632,7 +50633,7 @@ const Xn = (r, t) => (wct(r, t), Act(r, t)), Tct = (r, t = 1) => {
     const t = r, e = Qr(null);
     return Kn(() => {
       jn(
-        () => [t.data, _n.value],
+        () => [t.data, _n.value, t.color],
         () => {
           Vct({
             $dom: e,

@@ -44,7 +44,7 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
                 color: $color.seriesLabel
             },
             itemStyle: {
-                borderRadius: $radius
+                borderRadius: Number($radius)
             },
             showBackground: $showBackground,
             backgroundStyle: {

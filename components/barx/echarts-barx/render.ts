@@ -137,7 +137,7 @@ export default async ({
                 barWidth: $barWidth,
                 stack: $stack,
                 itemStyle: {
-                    borderRadius: $radius
+                    borderRadius: Number($radius)
                 },
                 showBackground: $showBackground
             })

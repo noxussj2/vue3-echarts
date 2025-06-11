@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" :key="props.height" />
 </template>
 
 <script lang="ts" setup>
@@ -117,7 +117,7 @@ const echarts = ref<null>(null)
 
 onMounted(() => {
     watch(
-        () => [props.data, echartsFlush.value],
+        () => ({ ...props, echartsFlush: echartsFlush.value }),
         () => {
             if (!props.data) return
             if (props.data.series.length === 0) return

@@ -8,7 +8,6 @@ import render from './render'
 import { echartsFlush } from '../../../styles'
 
 const props = defineProps({
-
     /**
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
@@ -110,7 +109,7 @@ const echarts = ref<null>(null)
 
 onMounted(() => {
     watch(
-        () => [props.data, echartsFlush.value],
+        () => [props.data, echartsFlush.value, props.color],
         () => {
             render({
                 $dom: echarts,

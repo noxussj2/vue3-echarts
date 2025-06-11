@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" :key="props.height" />
 </template>
 
 <script lang="ts" setup>
@@ -189,10 +189,12 @@ let timer: any = 0
 
 onMounted(() => {
     watch(
-        () => [props.data, echartsFlush.value],
+        () => ({ ...props, echartsFlush: echartsFlush.value }),
         async () => {
             if (!props.data) return
             if (props.data.axis.legnth === 0) return
+
+            console.log('render', 'echarts-barx')
 
             const instance: any = await render({
                 $dom: echarts,

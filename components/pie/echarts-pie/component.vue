@@ -1,21 +1,20 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" :key="props.height" />
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import render from './render'
-import { echartsFlush } from '../../../styles';
+import { echartsFlush } from '../../../styles'
 
 interface EmitsType {
-    (e: 'carousel', value: Number): void;
-    (e: 'click', value: any): void;
+    (e: 'carousel', value: Number): void
+    (e: 'click', value: any): void
 }
 
 const emit = defineEmits<EmitsType>()
 
 const props = defineProps({
-
     /**
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
@@ -126,7 +125,7 @@ let timer: any = 0
 
 onMounted(() => {
     watch(
-        () => [props.data, echartsFlush.value],
+        () => ({ ...props, echartsFlush: echartsFlush.value }),
         async (data) => {
             const instance: any = await render({
                 $dom: echarts,
@@ -146,7 +145,6 @@ onMounted(() => {
              */
             clearTimeout(timer)
             if (props.carousel && data.length) {
-
                 /**
                  * 清空所有高亮
                  */

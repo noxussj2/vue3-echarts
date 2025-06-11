@@ -1,5 +1,5 @@
 <template>
-    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" />
+    <div ref="echarts" class="echarts" :style="{ width: props.width, height: props.height }" :key="props.height" />
 </template>
 
 <script lang="ts" setup>
@@ -119,7 +119,7 @@ let timer = 0
 
 onMounted(() => {
     watch(
-        () => [props.data, echartsFlush.value],
+        () => ({ ...props, echartsFlush: echartsFlush.value }),
         async () => {
             if (props.data) {
                 const instance: any = await render({
@@ -127,18 +127,12 @@ onMounted(() => {
                     $opt: typeof props.opt === 'function' ? props.opt() : props.opt,
                     $data: props.data,
                     $seriesColor: props.color,
-                    $barWidth: props.barWidth,
-                    $stack: props.stack,
-                    $radius: props.radius,
-                    $singleColor: props.singleColor,
-                    $showBackground: props.showBackground,
                     $dataZoom: props.dataZoom,
                     $dataZoomNumber: props.dataZoomNumber,
                     $dataZoomColor: props.dataZoomColor,
                     $carousel: props.carousel,
                     $smooth: props.smooth,
                     $areaGradient: props.areaGradient,
-                    $debugger: props.debugger
                 })
 
                 /**
