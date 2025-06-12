@@ -20,7 +20,8 @@ export default async ({
     $smooth,
     $areaGradient,
     $symbol,
-    $debugger
+    $debugger,
+    $instanceId
 }: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
@@ -261,5 +262,5 @@ export default async ({
         console.log('debugger', extens($opt, options))
     }
 
-    return _echarts.render($dom, extens($opt, options))
+    return _echarts.render($dom, extens($opt, options), $instanceId)
 }

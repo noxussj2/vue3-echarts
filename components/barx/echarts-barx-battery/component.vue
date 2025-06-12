@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, onUnmounted } from 'vue'
 import render from './render'
 import { echartsFlush } from '../../../styles'
+import echartsInstance from "../../../utils/echarts-register"
 
 const props = defineProps({
     /**
@@ -154,13 +155,15 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
+let instance = null
+let instanceId = ''
 let timer = 0
 
 onMounted(() => {
     watch(
         () => [props.data, echartsFlush.value, props.color],
         async () => {
-            const instance: any = await render({
+            const res = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
@@ -175,8 +178,12 @@ onMounted(() => {
                 $dataZoomColor: props.dataZoomColor,
                 $carousel: props.carousel,
                 $smooth: props.smooth,
-                $areaGradient: props.areaGradient
+                $areaGradient: props.areaGradient,
+                $instanceId: instanceId
             })
+
+            instance = res.instance
+            instanceId = res.instanceId
 
             /**
              * 数据轮播
@@ -211,5 +218,11 @@ onMounted(() => {
             immediate: true
         }
     )
+})
+
+onUnmounted(() => {
+    if (instanceId) {
+        echartsInstance.destroy(instanceId)
+    }
 })
 </script>

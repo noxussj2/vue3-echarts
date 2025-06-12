@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, onUnmounted } from 'vue'
 import render from './render'
 import { echartsFlush } from '../../../styles'
+import echartsInstance from "../../../utils/echarts-register"
 
 interface EmitsType {
     (e: 'click', value: any): void
@@ -185,6 +186,8 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
+let instance = null
+let instanceId = ''
 let timer: any = 0
 
 onMounted(() => {
@@ -194,9 +197,7 @@ onMounted(() => {
             if (!props.data) return
             if (props.data.axis.legnth === 0) return
 
-            console.log('render', 'echarts-barx')
-
-            const instance: any = await render({
+            const res = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
@@ -213,8 +214,12 @@ onMounted(() => {
                 $smooth: props.smooth,
                 $areaGradient: props.areaGradient,
                 $symbol: props.symbol,
-                $debugger: props.debugger
+                $debugger: props.debugger,
+                $instanceId: instanceId
             })
+
+            instance = res.instance
+            instanceId = res.instanceId
 
             /**
              * 数据轮播
@@ -300,5 +305,11 @@ onMounted(() => {
             immediate: true
         }
     )
+})
+
+onUnmounted(() => {
+    if (instanceId) {
+        echartsInstance.destroy(instanceId)
+    }
 })
 </script>
