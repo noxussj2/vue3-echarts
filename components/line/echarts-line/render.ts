@@ -3,7 +3,20 @@ import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 import { colorToRgba } from '../../../utils/color'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom, $dataZoomNumber, $dataZoomColor, $carousel, $smooth, $areaGradient }: any) => {
+export default async ({
+    $dom,
+    $opt,
+    $data,
+    $seriesColor,
+    $singleColor,
+    $dataZoom,
+    $dataZoomNumber,
+    $dataZoomColor,
+    $carousel,
+    $smooth,
+    $areaGradient,
+    $instanceId
+}: any) => {
     const { $color, $grid, $tooltip, $vertical, $legend } = useStyle()
 
     const grid = { ...$grid }
@@ -189,5 +202,5 @@ export default async ({ $dom, $opt, $data, $seriesColor, $singleColor, $dataZoom
     /**
      * 继承配置项后渲染图表
      */
-    return _echarts.render($dom, extens($opt, options))
+    return _echarts.render($dom, extens($opt, options), $instanceId)
 }

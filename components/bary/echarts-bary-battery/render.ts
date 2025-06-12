@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $showBackground, $label }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $radius, $singleColor, $showBackground, $label, $instanceId }: any) => {
     const { $color, $grid, $tooltip, $horizontal, $legend } = useStyle()
 
     /**
@@ -18,7 +18,6 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
         const data: any = []
 
         item.data.forEach((x: any, i: number) => {
-
             /**
              * 常规颜色
              */
@@ -85,5 +84,5 @@ export default async ({ $dom, $opt, $data, $seriesColor, $barWidth, $stack, $rad
     /**
      * 继承配置项后渲染图表
      */
-    _echarts.render($dom, extens($opt, options))
+    return _echarts.render($dom, extens($opt, options), $instanceId)
 }

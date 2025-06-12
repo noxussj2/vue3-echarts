@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, onUnmounted } from 'vue'
 import render from './render'
 import { echartsFlush } from '../../../styles'
+import echartsInstance from '../../../utils/echarts-register'
 
 interface EmitsType {
     (e: 'carousel', value: Number): void
@@ -120,6 +121,8 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
+let instance = null
+let instanceId = ''
 const active = ref(0)
 let timer: any = 0
 
@@ -127,7 +130,7 @@ onMounted(() => {
     watch(
         () => ({ ...props, echartsFlush: echartsFlush.value }),
         async (data) => {
-            const instance: any = await render({
+            const res = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
@@ -137,8 +140,12 @@ onMounted(() => {
                 $center: props.center,
                 $legend: props.legend,
                 $roseType: props.roseType,
-                $carousel: props.carousel
+                $carousel: props.carousel,
+                $instanceId: instanceId
             })
+
+            instance = res.instance
+            instanceId = res.instanceId
 
             /**
              * 数据轮播
@@ -226,5 +233,11 @@ onMounted(() => {
             immediate: true
         }
     )
+})
+
+onUnmounted(() => {
+    if (instanceId) {
+        echartsInstance.destroy(instanceId)
+    }
 })
 </script>

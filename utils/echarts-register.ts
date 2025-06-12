@@ -7,9 +7,9 @@ class Echarts {
     constructor() {
         this.loaded = {}
 
-        setInterval(() => {
-            console.log('this.loaded', this.loaded)
-        }, 1000 * 5)
+        // setInterval(() => {
+        //     console.log('this.loaded', this.loaded)
+        // }, 1000 * 5)
     }
 
     /**

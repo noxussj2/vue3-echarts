@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import { useStyle } from '../../../styles'
 
-export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $center, $legend, $roseType, $carousel }: any) => {
+export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $center, $legend, $roseType, $carousel, $instanceId }: any) => {
     const { $color, $tooltip } = useStyle()
 
     /**
@@ -54,7 +54,6 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
         ),
         legend,
         series: [
-
             /**
              * 主图
              */
@@ -105,5 +104,5 @@ export default async ({ $dom, $opt, $data, $seriesColor, $radius, $label, $cente
     /**
      * 继承配置项后渲染图表
      */
-    return await _echarts.render($dom, extens($opt, options))
+    return _echarts.render($dom, extens($opt, options), $instanceId)
 }

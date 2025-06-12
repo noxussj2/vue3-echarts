@@ -2,7 +2,7 @@ import _echarts from '../../../utils/echarts-register'
 import { extens } from '../../../core/echarts-extens'
 import * as echarts from 'echarts'
 
-export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => {
+export default async ({ $dom, $opt, $json, $markers, $icon, $regions, $instanceId }: any) => {
     echarts.registerMap('Map', $json)
 
     /**
@@ -59,7 +59,6 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
             // regions: $regions
         },
         series: [
-
             // 区域图标
             // {
             //     type: 'scatter',
@@ -93,5 +92,5 @@ export default async ({ $dom, $opt, $json, $markers, $icon, $regions }: any) => 
     /**
      * 继承配置项后渲染图表
      */
-    return _echarts.render($dom, extens($opt, options))
+    return _echarts.render($dom, extens($opt, options), $instanceId)
 }

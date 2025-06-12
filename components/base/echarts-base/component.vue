@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, onUnmounted } from 'vue'
 import render from './render'
 import { echartsFlush } from '../../../styles'
+import echartsInstance from "../../../utils/echarts-register"
 
 const props = defineProps({
     /**
@@ -34,22 +35,34 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
+let instance = null
+let instanceId = ''
 
 onMounted(() => {
     console.log('echarts.value', echarts.value)
 
     watch(
         () => [echartsFlush.value],
-        () => {
-            render({
+        async () => {
+            const res = await render({
                 $dom: echarts,
-                $opt: props.opt
+                $opt: props.opt,
+                $instanceId: instanceId
             })
+
+            instance = res.instance
+            instanceId = res.instanceId
         },
         {
             deep: true,
             immediate: true
         }
     )
+})
+
+onUnmounted(() => {
+    if (instanceId) {
+        echartsInstance.destroy(instanceId)
+    }
 })
 </script>

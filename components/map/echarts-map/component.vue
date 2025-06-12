@@ -3,18 +3,18 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, onUnmounted } from 'vue'
 import render from './render'
+import echartsInstance from '../../../utils/echarts-register'
 
 interface EmitsType {
-    (e: 'region', value: any): void;
-    (e: 'marker', value: any[]): void;
+    (e: 'region', value: any): void
+    (e: 'marker', value: any[]): void
 }
 
 const emit = defineEmits<EmitsType>()
 
 const props = defineProps({
-
     /**
      * 用户配置项（继承已有配置，非必要时候勿用）
      */
@@ -65,13 +65,26 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
+let instance = null
+let instanceId = ''
 
 onMounted(() => {
     watch(
         [() => props.json, () => props.markers, () => props.regions],
         async () => {
             if (props.json.type) {
-                const instance = await render({ $dom: echarts, $opt: props.opt, $json: props.json, $markers: props.markers, $icon: props.icon, $regions: props.regions })
+                const res = await render({
+                    $dom: echarts,
+                    $opt: props.opt,
+                    $json: props.json,
+                    $markers: props.markers,
+                    $icon: props.icon,
+                    $regions: props.regions,
+                    $instanceId: instanceId
+                })
+
+                instance = res.instance
+                instanceId = res.instanceId
 
                 /**
                  * 地图下钻
@@ -96,6 +109,12 @@ onMounted(() => {
             immediate: true
         }
     )
+})
+
+onUnmounted(() => {
+    if (instanceId) {
+        echartsInstance.destroy(instanceId)
+    }
 })
 </script>
 
