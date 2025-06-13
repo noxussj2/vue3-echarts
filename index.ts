@@ -1,4 +1,5 @@
 import { loadStyle } from './styles/index'
+import "./styles/index.css"
 
 import _echarts from './utils/echarts-register'
 import EchartsBase from './components/base/echarts-base/component.vue'
