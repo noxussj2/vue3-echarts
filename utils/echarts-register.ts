@@ -10,6 +10,11 @@ class Echarts {
         // setInterval(() => {
         //     console.log('this.loaded', this.loaded)
         // }, 1000 * 5)
+        
+        window.onresize = () => {
+            this.resize()
+            console.log('resize')
+        }
     }
 
     /**
