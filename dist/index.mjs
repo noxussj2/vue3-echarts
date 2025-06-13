@@ -44027,9 +44027,29 @@ class nQ {
   /**
    * 图表重载
    */
-  resize() {
+  resize(t) {
+    if (!t || t === 0)
+      for (const e in this.loaded)
+        this.loaded[e].resize();
+    t && (this.hiden(), setTimeout(() => {
+      this.show();
+      for (const e in this.loaded)
+        this.loaded[e].resize();
+    }, t));
+  }
+  /**
+   * 图表隐藏
+   */
+  hiden() {
     for (const t in this.loaded)
-      this.loaded[t].resize();
+      this.loaded[t]._dom.style.opacity = "0";
+  }
+  /**
+   * 图表显示
+   */
+  show() {
+    for (const t in this.loaded)
+      this.loaded[t]._dom.style.opacity = "1";
   }
   /**
    * 销毁图表
