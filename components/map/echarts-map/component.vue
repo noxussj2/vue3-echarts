@@ -65,7 +65,7 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
-let instance = null
+let instance: any = null
 let instanceId = ''
 
 onMounted(() => {
@@ -73,7 +73,7 @@ onMounted(() => {
         [() => props.json, () => props.markers, () => props.regions],
         async () => {
             if (props.json.type) {
-                const res = await render({
+                const res: any = await render({
                     $dom: echarts,
                     $opt: props.opt,
                     $json: props.json,

@@ -115,7 +115,7 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
-let instance = null
+let instance: any = null
 let instanceId = ''
 
 onMounted(() => {
@@ -125,7 +125,7 @@ onMounted(() => {
             if (!props.data) return
             if (props.data.series.length === 0) return
 
-            const res = await render({
+            const res: any = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,

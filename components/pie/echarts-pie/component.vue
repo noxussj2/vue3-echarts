@@ -121,7 +121,7 @@ const props = defineProps({
 })
 
 const echarts = ref<null>(null)
-let instance = null
+let instance: any = null
 let instanceId = ''
 const active = ref(0)
 let timer: any = 0
@@ -130,7 +130,7 @@ onMounted(() => {
     watch(
         () => ({ ...props, echartsFlush: echartsFlush.value }),
         async (data) => {
-            const res = await render({
+            const res: any = await render({
                 $dom: echarts,
                 $opt: props.opt,
                 $data: props.data,
